@@ -1,0 +1,587 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8F7A578515B5F870008C48A1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7A578415B5F870008C48A1 /* Foundation.framework */; };
+		8F7A579315B5F870008C48A1 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7A579215B5F870008C48A1 /* SenTestingKit.framework */; };
+		8F7A579615B5F870008C48A1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7A578415B5F870008C48A1 /* Foundation.framework */; };
+		8F7A579915B5F870008C48A1 /* libBeeblex-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7A578115B5F870008C48A1 /* libBeeblex-SDK.a */; };
+		8F7A579F15B5F870008C48A1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8F7A579D15B5F870008C48A1 /* InfoPlist.strings */; };
+		8F7A57A215B5F870008C48A1 /* Beeblex_SDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57A115B5F870008C48A1 /* Beeblex_SDKTests.m */; };
+		8F7A57B215B5F8AA008C48A1 /* _BBXCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F7A57B015B5F8AA008C48A1 /* _BBXCrypto.h */; };
+		8F7A57B315B5F8AA008C48A1 /* _BBXCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57B115B5F8AA008C48A1 /* _BBXCrypto.m */; };
+		8F7A57B415B5F8AA008C48A1 /* _BBXCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57B115B5F8AA008C48A1 /* _BBXCrypto.m */; };
+		8F7A57B715B5F8B9008C48A1 /* openssl in Resources */ = {isa = PBXBuildFile; fileRef = 8F7A57B615B5F8B9008C48A1 /* openssl */; };
+		8F7A57BA15B5F8C2008C48A1 /* _BBXReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F7A57B815B5F8C2008C48A1 /* _BBXReachability.h */; };
+		8F7A57BB15B5F8C2008C48A1 /* _BBXReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57B915B5F8C2008C48A1 /* _BBXReachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8F7A57BC15B5F8C2008C48A1 /* _BBXReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57B915B5F8C2008C48A1 /* _BBXReachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8F7A57C115B5F8EC008C48A1 /* BBXBeeblex.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F7A57BE15B5F8EC008C48A1 /* BBXBeeblex.h */; };
+		8F7A57C215B5F8EC008C48A1 /* BBXBeeblex.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57BF15B5F8EC008C48A1 /* BBXBeeblex.m */; };
+		8F7A57C315B5F8EC008C48A1 /* BBXBeeblex.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57BF15B5F8EC008C48A1 /* BBXBeeblex.m */; };
+		8F7A57C415B5F8EC008C48A1 /* BBXBeeblex_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F7A57C015B5F8EC008C48A1 /* BBXBeeblex_Private.h */; };
+		8F7A57C815B5F90A008C48A1 /* BBXIAPTransaction.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F7A57C615B5F90A008C48A1 /* BBXIAPTransaction.h */; };
+		8F7A57C915B5F90A008C48A1 /* BBXIAPTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57C715B5F90A008C48A1 /* BBXIAPTransaction.m */; };
+		8F7A57CA15B5F90A008C48A1 /* BBXIAPTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57C715B5F90A008C48A1 /* BBXIAPTransaction.m */; };
+		8F7A57CE15B5F9A4008C48A1 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7A57CC15B5F9A4008C48A1 /* libcrypto.a */; };
+		8F7A57CF15B5F9A4008C48A1 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7A57CC15B5F9A4008C48A1 /* libcrypto.a */; };
+		8F7A57D015B5F9A4008C48A1 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7A57CD15B5F9A4008C48A1 /* libssl.a */; };
+		8F7A57D115B5F9A4008C48A1 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7A57CD15B5F9A4008C48A1 /* libssl.a */; };
+		8F7A581615B5FAFC008C48A1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7A581515B5FAFC008C48A1 /* SystemConfiguration.framework */; };
+		8F7A582615B5FC6C008C48A1 /* SKPaymentTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A582515B5FC6C008C48A1 /* SKPaymentTransaction.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8F7A579715B5F870008C48A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8F7A577615B5F870008C48A1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8F7A578015B5F870008C48A1;
+			remoteInfo = "Beeblex-SDK";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		8F7A578115B5F870008C48A1 /* libBeeblex-SDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libBeeblex-SDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F7A578415B5F870008C48A1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		8F7A578815B5F870008C48A1 /* Beeblex-SDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Beeblex-SDK-Prefix.pch"; sourceTree = "<group>"; };
+		8F7A579115B5F870008C48A1 /* Beeblex-SDKTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Beeblex-SDKTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F7A579215B5F870008C48A1 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		8F7A579C15B5F870008C48A1 /* Beeblex-SDKTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Beeblex-SDKTests-Info.plist"; sourceTree = "<group>"; };
+		8F7A579E15B5F870008C48A1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8F7A57A015B5F870008C48A1 /* Beeblex_SDKTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Beeblex_SDKTests.h; sourceTree = "<group>"; };
+		8F7A57A115B5F870008C48A1 /* Beeblex_SDKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Beeblex_SDKTests.m; sourceTree = "<group>"; };
+		8F7A57B015B5F8AA008C48A1 /* _BBXCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _BBXCrypto.h; sourceTree = "<group>"; };
+		8F7A57B115B5F8AA008C48A1 /* _BBXCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _BBXCrypto.m; sourceTree = "<group>"; };
+		8F7A57B615B5F8B9008C48A1 /* openssl */ = {isa = PBXFileReference; lastKnownFileType = folder; path = openssl; sourceTree = "<group>"; };
+		8F7A57B815B5F8C2008C48A1 /* _BBXReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _BBXReachability.h; sourceTree = "<group>"; };
+		8F7A57B915B5F8C2008C48A1 /* _BBXReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _BBXReachability.m; sourceTree = "<group>"; };
+		8F7A57BE15B5F8EC008C48A1 /* BBXBeeblex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBXBeeblex.h; sourceTree = "<group>"; };
+		8F7A57BF15B5F8EC008C48A1 /* BBXBeeblex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBXBeeblex.m; sourceTree = "<group>"; };
+		8F7A57C015B5F8EC008C48A1 /* BBXBeeblex_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBXBeeblex_Private.h; sourceTree = "<group>"; };
+		8F7A57C615B5F90A008C48A1 /* BBXIAPTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBXIAPTransaction.h; sourceTree = "<group>"; };
+		8F7A57C715B5F90A008C48A1 /* BBXIAPTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBXIAPTransaction.m; sourceTree = "<group>"; };
+		8F7A57CC15B5F9A4008C48A1 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
+		8F7A57CD15B5F9A4008C48A1 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
+		8F7A581515B5FAFC008C48A1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		8F7A582415B5FC6C008C48A1 /* SKPaymentTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKPaymentTransaction.h; sourceTree = "<group>"; };
+		8F7A582515B5FC6C008C48A1 /* SKPaymentTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKPaymentTransaction.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8F7A577D15B5F870008C48A1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8F7A578515B5F870008C48A1 /* Foundation.framework in Frameworks */,
+				8F7A57CE15B5F9A4008C48A1 /* libcrypto.a in Frameworks */,
+				8F7A57D015B5F9A4008C48A1 /* libssl.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F7A578D15B5F870008C48A1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8F7A581615B5FAFC008C48A1 /* SystemConfiguration.framework in Frameworks */,
+				8F7A579315B5F870008C48A1 /* SenTestingKit.framework in Frameworks */,
+				8F7A579615B5F870008C48A1 /* Foundation.framework in Frameworks */,
+				8F7A579915B5F870008C48A1 /* libBeeblex-SDK.a in Frameworks */,
+				8F7A57CF15B5F9A4008C48A1 /* libcrypto.a in Frameworks */,
+				8F7A57D115B5F9A4008C48A1 /* libssl.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8F7A577415B5F870008C48A1 = {
+			isa = PBXGroup;
+			children = (
+				8F7A578615B5F870008C48A1 /* Beeblex-SDK */,
+				8F7A579A15B5F870008C48A1 /* Beeblex-SDKTests */,
+				8F7A578315B5F870008C48A1 /* Frameworks */,
+				8F7A578215B5F870008C48A1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8F7A578215B5F870008C48A1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8F7A578115B5F870008C48A1 /* libBeeblex-SDK.a */,
+				8F7A579115B5F870008C48A1 /* Beeblex-SDKTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8F7A578315B5F870008C48A1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8F7A57CC15B5F9A4008C48A1 /* libcrypto.a */,
+				8F7A57CD15B5F9A4008C48A1 /* libssl.a */,
+				8F7A581515B5FAFC008C48A1 /* SystemConfiguration.framework */,
+				8F7A578415B5F870008C48A1 /* Foundation.framework */,
+				8F7A579215B5F870008C48A1 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8F7A578615B5F870008C48A1 /* Beeblex-SDK */ = {
+			isa = PBXGroup;
+			children = (
+				8F7A57AF15B5F89E008C48A1 /* Public Classes */,
+				8F7A57AE15B5F899008C48A1 /* Private Classes */,
+				8F7A578715B5F870008C48A1 /* Supporting Files */,
+			);
+			path = "Beeblex-SDK";
+			sourceTree = "<group>";
+		};
+		8F7A578715B5F870008C48A1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8F7A578815B5F870008C48A1 /* Beeblex-SDK-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8F7A579A15B5F870008C48A1 /* Beeblex-SDKTests */ = {
+			isa = PBXGroup;
+			children = (
+				8F7A582315B5FC63008C48A1 /* Mocks */,
+				8F7A582215B5FC5A008C48A1 /* Tests */,
+				8F7A579B15B5F870008C48A1 /* Supporting Files */,
+			);
+			path = "Beeblex-SDKTests";
+			sourceTree = "<group>";
+		};
+		8F7A579B15B5F870008C48A1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8F7A579C15B5F870008C48A1 /* Beeblex-SDKTests-Info.plist */,
+				8F7A579D15B5F870008C48A1 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8F7A57AE15B5F899008C48A1 /* Private Classes */ = {
+			isa = PBXGroup;
+			children = (
+				8F7A57B515B5F8AE008C48A1 /* Crypto */,
+				8F7A57BD15B5F8C5008C48A1 /* Reachability */,
+			);
+			name = "Private Classes";
+			sourceTree = "<group>";
+		};
+		8F7A57AF15B5F89E008C48A1 /* Public Classes */ = {
+			isa = PBXGroup;
+			children = (
+				8F7A57CB15B5F90C008C48A1 /* BBXIAPTransaction */,
+				8F7A57C515B5F8FB008C48A1 /* BBXBeeblex */,
+			);
+			name = "Public Classes";
+			sourceTree = "<group>";
+		};
+		8F7A57B515B5F8AE008C48A1 /* Crypto */ = {
+			isa = PBXGroup;
+			children = (
+				8F7A57B615B5F8B9008C48A1 /* openssl */,
+				8F7A57B015B5F8AA008C48A1 /* _BBXCrypto.h */,
+				8F7A57B115B5F8AA008C48A1 /* _BBXCrypto.m */,
+			);
+			name = Crypto;
+			sourceTree = "<group>";
+		};
+		8F7A57BD15B5F8C5008C48A1 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				8F7A57B815B5F8C2008C48A1 /* _BBXReachability.h */,
+				8F7A57B915B5F8C2008C48A1 /* _BBXReachability.m */,
+			);
+			name = Reachability;
+			sourceTree = "<group>";
+		};
+		8F7A57C515B5F8FB008C48A1 /* BBXBeeblex */ = {
+			isa = PBXGroup;
+			children = (
+				8F7A57BE15B5F8EC008C48A1 /* BBXBeeblex.h */,
+				8F7A57BF15B5F8EC008C48A1 /* BBXBeeblex.m */,
+				8F7A57C015B5F8EC008C48A1 /* BBXBeeblex_Private.h */,
+			);
+			name = BBXBeeblex;
+			sourceTree = "<group>";
+		};
+		8F7A57CB15B5F90C008C48A1 /* BBXIAPTransaction */ = {
+			isa = PBXGroup;
+			children = (
+				8F7A57C615B5F90A008C48A1 /* BBXIAPTransaction.h */,
+				8F7A57C715B5F90A008C48A1 /* BBXIAPTransaction.m */,
+			);
+			name = BBXIAPTransaction;
+			sourceTree = "<group>";
+		};
+		8F7A582215B5FC5A008C48A1 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				8F7A57A015B5F870008C48A1 /* Beeblex_SDKTests.h */,
+				8F7A57A115B5F870008C48A1 /* Beeblex_SDKTests.m */,
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
+		8F7A582315B5FC63008C48A1 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				8F7A582415B5FC6C008C48A1 /* SKPaymentTransaction.h */,
+				8F7A582515B5FC6C008C48A1 /* SKPaymentTransaction.m */,
+			);
+			name = Mocks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		8F7A577E15B5F870008C48A1 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8F7A57B215B5F8AA008C48A1 /* _BBXCrypto.h in Headers */,
+				8F7A57BA15B5F8C2008C48A1 /* _BBXReachability.h in Headers */,
+				8F7A57C115B5F8EC008C48A1 /* BBXBeeblex.h in Headers */,
+				8F7A57C415B5F8EC008C48A1 /* BBXBeeblex_Private.h in Headers */,
+				8F7A57C815B5F90A008C48A1 /* BBXIAPTransaction.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		8F7A578015B5F870008C48A1 /* Beeblex-SDK */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8F7A57A515B5F870008C48A1 /* Build configuration list for PBXNativeTarget "Beeblex-SDK" */;
+			buildPhases = (
+				8F7A577B15B5F870008C48A1 /* ShellScript */,
+				8F7A577C15B5F870008C48A1 /* Sources */,
+				8F7A577D15B5F870008C48A1 /* Frameworks */,
+				8F7A577E15B5F870008C48A1 /* Headers */,
+				8F7A577F15B5F870008C48A1 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Beeblex-SDK";
+			productName = "Beeblex-SDK";
+			productReference = 8F7A578115B5F870008C48A1 /* libBeeblex-SDK.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		8F7A579015B5F870008C48A1 /* Beeblex-SDKTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8F7A57A815B5F870008C48A1 /* Build configuration list for PBXNativeTarget "Beeblex-SDKTests" */;
+			buildPhases = (
+				8F7A578C15B5F870008C48A1 /* Sources */,
+				8F7A578D15B5F870008C48A1 /* Frameworks */,
+				8F7A578E15B5F870008C48A1 /* Resources */,
+				8F7A578F15B5F870008C48A1 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8F7A579815B5F870008C48A1 /* PBXTargetDependency */,
+			);
+			name = "Beeblex-SDKTests";
+			productName = "Beeblex-SDKTests";
+			productReference = 8F7A579115B5F870008C48A1 /* Beeblex-SDKTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8F7A577615B5F870008C48A1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0440;
+				ORGANIZATIONNAME = "Blue Parabola, LLC.";
+			};
+			buildConfigurationList = 8F7A577915B5F870008C48A1 /* Build configuration list for PBXProject "Beeblex-SDK" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 8F7A577415B5F870008C48A1;
+			productRefGroup = 8F7A578215B5F870008C48A1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8F7A578015B5F870008C48A1 /* Beeblex-SDK */,
+				8F7A579015B5F870008C48A1 /* Beeblex-SDKTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8F7A578E15B5F870008C48A1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8F7A579F15B5F870008C48A1 /* InfoPlist.strings in Resources */,
+				8F7A57B715B5F8B9008C48A1 /* openssl in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8F7A577B15B5F870008C48A1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nif [ \"$CALLED_FROM_MASTER\" ]\nthen\n# This is the other build, called from the original instance\nexit 0\nfi\n\n# Clean up prior to build\n\nCURRENTCONFIG_DEVICE_DIR=\"${SYMROOT}/${CONFIGURATION}-iphoneos\"\nCURRENTCONFIG_SIMULATOR_DIR=\"${SYMROOT}/${CONFIGURATION}-iphonesimulator\"\nCURRENTCONFIG_UNIVERSAL_DIR=\"${SYMROOT}/${CONFIGURATION}-universal\"\n\nif [ ! -f \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\" ]; then\n  echo \"Device build cleaned; cleaning other builds too\"\n  rm -f \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\" \n  rm -f \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\nelif [ ! -f \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\" ]; then\n  echo \"Simulator build cleaned; cleaning other builds too\"\n  rm -f \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\"\n  rm -f \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\nfi\n";
+		};
+		8F7A577F15B5F870008C48A1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\n#\n# Universal static library script\n# http://github.com/michaeltyson/iOS-Universal-Library-Template\n#\n# Version 2.5\n# \n# Purpose:\n#   Create a static library for iPhone from within XCode\n#\n# Author: Adam Martin - http://twitter.com/redglassesapps\n# Tweaked and made into an Xcode template by Michael Tyson - http://atastypixel.com/blog\n# Based on original script from Eonil\n# More info: see this Stack Overflow question: http://stackoverflow.com/questions/3520977/build-fat-static-library-device-simulator-using-xcode-and-sdk-4\n#\n#################[ Tests: helps workaround any future bugs in Xcode ]########\n#\nDEBUG_THIS_SCRIPT=\"false\"\n\nif [ $DEBUG_THIS_SCRIPT = \"true\" ]\nthen\necho \"########### TESTS #############\"\necho \"Use the following variables when debugging this script; note that they may change on recursions\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"BUILT_PRODUCTS_DIR = $BUILT_PRODUCTS_DIR\"\necho \"CONFIGURATION_TEMP_DIR = $CONFIGURATION_TEMP_DIR\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\nfi\n\nif [ \"$CALLED_FROM_MASTER\" ]\nthen\n  # This is the other build, called from the original instance\n  exit 0\nfi\n\n# Find the BASESDK version number\nSDK_VERSION=$(echo ${SDK_NAME} | grep -o '.\\{3\\}$')\n\n# Next, work out if we're in SIM or DEVICE\nif [ ${PLATFORM_NAME} = \"iphonesimulator\" ]\nthen\n    OTHER_SDK_TO_BUILD=iphoneos${SDK_VERSION}\nelse\n    OTHER_SDK_TO_BUILD=iphonesimulator${SDK_VERSION}\nfi\n\necho \"XCode has selected SDK: ${PLATFORM_NAME} with version: ${SDK_VERSION} (although back-targetting: ${IPHONEOS_DEPLOYMENT_TARGET})\"\necho \"...therefore, OTHER_SDK_TO_BUILD = ${OTHER_SDK_TO_BUILD}\"\n\n# Build the other architecture\necho \"xcodebuild -project \\\"${PROJECT_FILE_PATH}\\\" -configuration \\\"${CONFIGURATION}\\\" -target \\\"${TARGET_NAME}\\\" -sdk \\\"${OTHER_SDK_TO_BUILD}\\\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO BUILD_DIR=\\\"${BUILD_DIR}\\\" BUILD_ROOT=\\\"${BUILD_ROOT}\\\" CALLED_FROM_MASTER=1\"\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -configuration \"${CONFIGURATION}\" -target \"${TARGET_NAME}\" -sdk \"${OTHER_SDK_TO_BUILD}\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" CALLED_FROM_MASTER=1\n\n# Merge built architectures\nCURRENTCONFIG_DEVICE_DIR=\"${SYMROOT}/${CONFIGURATION}-iphoneos\"\nCURRENTCONFIG_SIMULATOR_DIR=\"${SYMROOT}/${CONFIGURATION}-iphonesimulator\"\nCURRENTCONFIG_UNIVERSAL_DIR=\"${SYMROOT}/${CONFIGURATION}-universal\"\n\necho \"Taking device build from: ${CURRENTCONFIG_DEVICE_DIR}\"\necho \"Taking simulator build from: ${CURRENTCONFIG_SIMULATOR_DIR}\"\necho \"...I will output a universal build to: ${CURRENTCONFIG_UNIVERSAL_DIR}\"\n\nif [ ! -e \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" -o \\\n        \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\" -nt \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" -o \\\n        \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\" -nt \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" ]\nthen\n    mkdir -p \"${CURRENTCONFIG_UNIVERSAL_DIR}\"\n    rm -f \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\n\n    echo \"lipo: for current configuration (${CONFIGURATION}) creating output file: ${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\n    lipo -create -output \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\"\n\n    echo \"Copying universal build back over to ${CURRENTCONFIG_DEVICE_DIR} and ${CURRENTCONFIG_SIMULATOR_DIR}\"\n    cp \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\"\n    cp \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\"\n    touch \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\n\n    # Also copy public headers\n    if [ -d \"${CURRENTCONFIG_DEVICE_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}\" ]\n    then\n        mkdir -p \"${CURRENTCONFIG_UNIVERSAL_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}\"\n        cp \"${CURRENTCONFIG_DEVICE_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\"* \"${CURRENTCONFIG_UNIVERSAL_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}\"\n    fi\nelse\n    echo \"Everything up to date.\"\nfi\n";
+		};
+		8F7A578F15B5F870008C48A1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8F7A577C15B5F870008C48A1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8F7A57B315B5F8AA008C48A1 /* _BBXCrypto.m in Sources */,
+				8F7A57BB15B5F8C2008C48A1 /* _BBXReachability.m in Sources */,
+				8F7A57C215B5F8EC008C48A1 /* BBXBeeblex.m in Sources */,
+				8F7A57C915B5F90A008C48A1 /* BBXIAPTransaction.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F7A578C15B5F870008C48A1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8F7A57A215B5F870008C48A1 /* Beeblex_SDKTests.m in Sources */,
+				8F7A57B415B5F8AA008C48A1 /* _BBXCrypto.m in Sources */,
+				8F7A57BC15B5F8C2008C48A1 /* _BBXReachability.m in Sources */,
+				8F7A57C315B5F8EC008C48A1 /* BBXBeeblex.m in Sources */,
+				8F7A57CA15B5F90A008C48A1 /* BBXIAPTransaction.m in Sources */,
+				8F7A582615B5FC6C008C48A1 /* SKPaymentTransaction.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8F7A579815B5F870008C48A1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8F7A578015B5F870008C48A1 /* Beeblex-SDK */;
+			targetProxy = 8F7A579715B5F870008C48A1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		8F7A579D15B5F870008C48A1 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8F7A579E15B5F870008C48A1 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		8F7A57A315B5F870008C48A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		8F7A57A415B5F870008C48A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8F7A57A615B5F870008C48A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				DSTROOT = /tmp/Beeblex_SDK.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Beeblex-SDK/Beeblex-SDK-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		8F7A57A715B5F870008C48A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				DSTROOT = /tmp/Beeblex_SDK.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Beeblex-SDK/Beeblex-SDK-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		8F7A57A915B5F870008C48A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Beeblex-SDK/Beeblex-SDK-Prefix.pch";
+				INFOPLIST_FILE = "Beeblex-SDKTests/Beeblex-SDKTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		8F7A57AA15B5F870008C48A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Beeblex-SDK/Beeblex-SDK-Prefix.pch";
+				INFOPLIST_FILE = "Beeblex-SDKTests/Beeblex-SDKTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8F7A577915B5F870008C48A1 /* Build configuration list for PBXProject "Beeblex-SDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8F7A57A315B5F870008C48A1 /* Debug */,
+				8F7A57A415B5F870008C48A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8F7A57A515B5F870008C48A1 /* Build configuration list for PBXNativeTarget "Beeblex-SDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8F7A57A615B5F870008C48A1 /* Debug */,
+				8F7A57A715B5F870008C48A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8F7A57A815B5F870008C48A1 /* Build configuration list for PBXNativeTarget "Beeblex-SDKTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8F7A57A915B5F870008C48A1 /* Debug */,
+				8F7A57AA15B5F870008C48A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8F7A577615B5F870008C48A1 /* Project object */;
+}
