@@ -106,9 +106,9 @@
 
 #import "_BBXReachability.h"
 
-NSString *const kInternetConnection  = @"InternetConnection";
-NSString *const kLocalWiFiConnection = @"LocalWiFiConnection";
-NSString *const kReachabilityChangedNotification = @"NetworkReachabilityChangedNotification";
+NSString *const kBBXInternetConnection  = @"InternetConnection";
+NSString *const kBBXLocalWiFiConnection = @"LocalWiFiConnection";
+NSString *const kBBXReachabilityChangedNotification = @"NetworkReachabilityChangedNotification";
 
 #define CLASS_DEBUG 1 // Turn on logReachabilityFlags. Must also have a project wide defined DEBUG.
 
@@ -258,7 +258,7 @@ static void bbxReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRe
 	NSAutoreleasePool* pool = [NSAutoreleasePool new];
 	
 	// Post a notification to notify the client that the network reachability changed.
-	[[NSNotificationCenter defaultCenter] postNotificationName: kReachabilityChangedNotification 
+	[[NSNotificationCenter defaultCenter] postNotificationName: kBBXReachabilityChangedNotification 
 														object: (_BBXReachability *) info];
 	
 	[pool release];
@@ -373,7 +373,7 @@ static void bbxReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRe
 
 	_BBXReachability *r = [self reachabilityWithAddress: &zeroAddress];
 
-	r.key = kInternetConnection;
+	r.key = kBBXInternetConnection;
 	
 	return r;
 
@@ -391,7 +391,7 @@ static void bbxReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRe
 
 	_BBXReachability *r = [self reachabilityWithAddress: &localWifiAddress];
 
-	r.key = kLocalWiFiConnection;
+	r.key = kBBXLocalWiFiConnection;
 
 	return r;
 
@@ -427,7 +427,7 @@ const SCNetworkReachabilityFlags kConnectionDown =  kSCNetworkReachabilityFlagsC
 	if (flags & kSCNetworkReachabilityFlagsReachable) {
 		
 		// Local WiFi -- Test derived from Apple's code: -localWiFiStatusForFlags:.
-		if (self.key == kLocalWiFiConnection) {
+		if (self.key == kBBXLocalWiFiConnection) {
 
 			// Reachability Flag Status: xR xxxxxxd Reachable.
 			return (flags & kSCNetworkReachabilityFlagsIsDirect) ? kReachableViaWiFi : kNotReachable;
