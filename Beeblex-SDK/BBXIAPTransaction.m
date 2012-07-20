@@ -13,7 +13,9 @@
 
 #import "_BBXCrypto.h"
 #import "_BBXReachability.h"
+#import "_BBXJSONKit.h"
 
+#import "NSURLConnection+SendAsync.h"
 
 const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
     .domain = @"BBXIAPTransactionDomain",
@@ -117,10 +119,9 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
         completionBlock(error);
         return;
     }
+        
+    [crypto setClearTextWithData:[payload JSONDataWithOptions:JKSerializeOptionNone error:nil]];
     
-    [crypto setClearTextWithData:[NSJSONSerialization dataWithJSONObject:payload
-                                                                          options:0
-                                                                            error:Nil]];
     NSData *cypherText = [crypto encrypt:@"blowfish"];
     
     if (!cypherText) {
@@ -168,15 +169,15 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
         @"payload" : [_BBXCrypto encodeBase64:cypherText WithNewlines:NO]
     };
     
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:finalPayload
-                                                       options:0
-                                                         error:Nil];
-    
+    NSData *jsonData = [finalPayload JSONDataWithOptions:JKSerializeOptionNone error:nil];
+        
     NSAssert(jsonData, @"Unable to create JSON payload");
     
+#ifdef DEBUG
     if (!self.useSecureConnection) {
         NSLog(@"Warning: Beeblex is not using HTTPS to connect to the server, most likely due to export compliance reasons. This is not necessarily a problem, but we thought you should know.");
     }
+#endif
     
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/app/%@/verify",
                                        self.useSecureConnection ? [BBXBeeblex _baseSecureURL] : [BBXBeeblex _baseURL],
@@ -186,6 +187,7 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
     request.HTTPMethod = @"POST";
     request.HTTPBody = jsonData;
     
+    
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
@@ -194,7 +196,7 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
                                                                code:BBXIAPTransactionErrorCodes.cannotContactBBXValidationServer
                                                            userInfo:@{
                                          NSLocalizedDescriptionKey : NSLocalizedString(@"Unable to contact the Beeblex validation server.", Nil)}];
-
+                                   
                                    self.hasServerError = YES;
                                    self.running = NO;
                                    completionBlock(error);
@@ -202,7 +204,7 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
                                }
                                
                                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
-
+                               
                                if (httpResponse.statusCode > 399 && httpResponse.statusCode < 500) {
                                    error = [NSError errorWithDomain:BBXIAPTransactionErrorCodes.domain
                                                                code:BBXIAPTransactionErrorCodes.clientError
@@ -253,7 +255,7 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
                                    completionBlock(error);
                                    return;
                                }
-
+                               
                                [crypto setCipherText:data];
                                
                                NSData *result = [crypto decrypt:@"blowfish"];
@@ -269,10 +271,9 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
                                    completionBlock(error);
                                    return;
                                }
-
-                               NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:result
-                                                                                          options:0
-                                                                                            error:&error];
+                               
+                               NSDictionary *dictionary = [[BBXJSONDecoder decoder] objectWithData:result
+                                                                                             error:&error];
                                
                                if (!dictionary || ![dictionary isKindOfClass:[NSDictionary class]]) {
                                    error = [NSError errorWithDomain:BBXIAPTransactionErrorCodes.domain
@@ -301,7 +302,7 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
                                    self.validatedTransactionData = iapData;
                                    self.transactionIsDuplicate = [[dictionary objectForKey:@"duplicate"] boolValue];
                                }
-     
+                               
                                completionBlock(Nil);
                            }];
 }
