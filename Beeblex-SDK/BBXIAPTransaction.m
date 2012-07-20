@@ -62,6 +62,7 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
 }
 
 @synthesize useSandbox = _useSandbox;
+@synthesize hasConfigurationError = _hasConfigurationError;
 
 @synthesize useSecureConnection = _useSecureConnection;
 
