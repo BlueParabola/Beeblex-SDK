@@ -16,7 +16,6 @@
 		8F7A57B215B5F8AA008C48A1 /* _BBXCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F7A57B015B5F8AA008C48A1 /* _BBXCrypto.h */; };
 		8F7A57B315B5F8AA008C48A1 /* _BBXCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57B115B5F8AA008C48A1 /* _BBXCrypto.m */; };
 		8F7A57B415B5F8AA008C48A1 /* _BBXCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57B115B5F8AA008C48A1 /* _BBXCrypto.m */; };
-		8F7A57B715B5F8B9008C48A1 /* openssl in Resources */ = {isa = PBXBuildFile; fileRef = 8F7A57B615B5F8B9008C48A1 /* openssl */; };
 		8F7A57BA15B5F8C2008C48A1 /* _BBXReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F7A57B815B5F8C2008C48A1 /* _BBXReachability.h */; };
 		8F7A57BB15B5F8C2008C48A1 /* _BBXReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57B915B5F8C2008C48A1 /* _BBXReachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8F7A57BC15B5F8C2008C48A1 /* _BBXReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57B915B5F8C2008C48A1 /* _BBXReachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -35,6 +34,8 @@
 		8F7A582615B5FC6C008C48A1 /* SKPaymentTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A582515B5FC6C008C48A1 /* SKPaymentTransaction.m */; };
 		EAA4D35E15B95FE200DA0298 /* NSURLConnection+SendAsync.h in Headers */ = {isa = PBXBuildFile; fileRef = EAA4D35C15B95FE200DA0298 /* NSURLConnection+SendAsync.h */; };
 		EAA4D35F15B95FE200DA0298 /* NSURLConnection+SendAsync.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA4D35D15B95FE200DA0298 /* NSURLConnection+SendAsync.m */; };
+		EAA4D36315BA39BB00DA0298 /* NSURLConnection+SendAsync.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA4D35D15B95FE200DA0298 /* NSURLConnection+SendAsync.m */; };
+		EAA4D36515BA39C000DA0298 /* _BBXJSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = EADE7A5715B9457900A1306A /* _BBXJSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EADE7A5815B9457900A1306A /* _BBXJSONKit.h in Headers */ = {isa = PBXBuildFile; fileRef = EADE7A5615B9457900A1306A /* _BBXJSONKit.h */; };
 		EADE7A5915B9457900A1306A /* _BBXJSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = EADE7A5715B9457900A1306A /* _BBXJSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
@@ -360,7 +361,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F7A579F15B5F870008C48A1 /* InfoPlist.strings in Resources */,
-				8F7A57B715B5F8B9008C48A1 /* openssl in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +432,8 @@
 				8F7A57C315B5F8EC008C48A1 /* BBXBeeblex.m in Sources */,
 				8F7A57CA15B5F90A008C48A1 /* BBXIAPTransaction.m in Sources */,
 				8F7A582615B5FC6C008C48A1 /* SKPaymentTransaction.m in Sources */,
+				EAA4D36315BA39BB00DA0298 /* NSURLConnection+SendAsync.m in Sources */,
+				EAA4D36515BA39C000DA0298 /* _BBXJSONKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,6 +522,7 @@
 					"\"$(SRCROOT)\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
+				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -542,6 +545,7 @@
 					"\"$(SRCROOT)\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
+				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -561,6 +565,8 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
+				OTHER_LDFLAGS = "";
+				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -580,6 +586,8 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
+				OTHER_LDFLAGS = "";
+				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
 			};

@@ -175,7 +175,10 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
     
 #ifdef DEBUG
     if (!self.useSecureConnection) {
-        NSLog(@"Warning: Beeblex is not using HTTPS to connect to the server, most likely due to export compliance reasons. This is not necessarily a problem, but we thought you should know.");
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            NSLog(@"Warning: Beeblex is not using HTTPS to connect to the server, most likely due to export compliance reasons. This is not necessarily a problem, but we thought you should know.");
+        });
     }
 #endif
     
