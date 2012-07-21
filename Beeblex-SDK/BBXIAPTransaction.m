@@ -99,13 +99,17 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
     
     NSAssert1(symmetricKey.length == 8, @"The secret key should be 8 bytes; %d found instead", symmetricKey.length);
     
-    NSDictionary *payload = @{
-        @"transactionData"  : [[NSString alloc] initWithData:_transaction.transactionReceipt
-                                                    encoding:NSUTF8StringEncoding],
-        @"submissionDate"   : @((NSUInteger) [[NSDate date] timeIntervalSince1970]),
-        @"transactionId"    : _transaction.transactionIdentifier,
-        @"useSandbox"       : @(self.useSandbox)
-    };
+    NSDictionary *payload = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [[NSString alloc] initWithData:_transaction.transactionReceipt
+                                                   encoding:NSUTF8StringEncoding], @"transactionData",
+                             
+                             [NSNumber numberWithUnsignedInt:(unsigned int) [[NSDate date] timeIntervalSince1970]], @"submissionDate",
+                             
+                             _transaction.transactionIdentifier, @"transactionId",
+                             
+                             @(self.useSandbox), @"useSandbox",
+                             
+                             Nil];
 
     _BBXCrypto *crypto = [[_BBXCrypto alloc] initWithSymmetricKey:symmetricKey];
     
@@ -113,7 +117,8 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
         self.hasConfigurationError = YES;
         NSError *error = [[NSError alloc] initWithDomain:BBXIAPTransactionErrorCodes.domain
                                                     code:BBXIAPTransactionErrorCodes.encryptionEngineCannotBeInitialized
-                                                userInfo:@{ NSLocalizedDescriptionKey :  NSLocalizedString(@"The encryption engine cannot be initialized.", Nil)}];
+                                                userInfo:[NSDictionary dictionaryWithObject:NSLocalizedString(@"The encryption engine cannot be initialized.", Nil)
+                                                                                     forKey:NSLocalizedDescriptionKey]];
         
         self.running = NO;
         completionBlock(error);
@@ -128,7 +133,8 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
         self.hasConfigurationError = YES;
         NSError *error = [[NSError alloc] initWithDomain:BBXIAPTransactionErrorCodes.domain
                                                     code:BBXIAPTransactionErrorCodes.encryptionEngineCannotBeInitialized
-                                                userInfo:@{ NSLocalizedDescriptionKey :  NSLocalizedString(@"Cannot generate encryption key.", Nil)}];
+                                                userInfo:[NSDictionary dictionaryWithObject:NSLocalizedString(@"Cannot generate encryption key.", Nil)
+                                                                                     forKey:NSLocalizedDescriptionKey]];
         
         self.running = NO;
         completionBlock(error);
@@ -142,7 +148,8 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
         self.hasConfigurationError = YES;
         NSError *error = [[NSError alloc] initWithDomain:BBXIAPTransactionErrorCodes.domain
                                                     code:BBXIAPTransactionErrorCodes.encryptionEngineCannotBeInitialized
-                                                userInfo:@{ NSLocalizedDescriptionKey :  NSLocalizedString(@"Cannot generate public key.", Nil)}];
+                                                userInfo:[NSDictionary dictionaryWithObject:NSLocalizedString(@"Cannot generate public key.", Nil)
+                                                                                     forKey:NSLocalizedDescriptionKey]];
         
         self.running = NO;
         completionBlock(error);
@@ -157,17 +164,18 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
         self.hasConfigurationError = YES;
         NSError *error = [[NSError alloc] initWithDomain:BBXIAPTransactionErrorCodes.domain
                                                     code:BBXIAPTransactionErrorCodes.encryptionEngineCannotBeInitialized
-                                                userInfo:@{ NSLocalizedDescriptionKey :  NSLocalizedString(@"Cannot encrypt symmetric key.", Nil)}];
+                                                userInfo:[NSDictionary dictionaryWithObject:NSLocalizedString(@"Cannot encrypt symmetric key.", Nil)
+                                                                                     forKey:NSLocalizedDescriptionKey]];
         
         self.running = NO;
         completionBlock(error);
         return;
     }
     
-    NSDictionary *finalPayload = @{
-        @"signature" : [_BBXCrypto encodeBase64:signature WithNewlines:NO],
-        @"payload" : [_BBXCrypto encodeBase64:cypherText WithNewlines:NO]
-    };
+    NSDictionary *finalPayload = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  [_BBXCrypto encodeBase64:signature WithNewlines:NO], @"signature",
+                                  [_BBXCrypto encodeBase64:cypherText WithNewlines:NO], @"payload",
+                                  Nil];
     
     NSData *jsonData = [finalPayload JSONDataWithOptions:JKSerializeOptionNone error:nil];
         
@@ -197,8 +205,8 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
                                if (!data || error) {
                                    error = [NSError errorWithDomain:BBXIAPTransactionErrorCodes.domain
                                                                code:BBXIAPTransactionErrorCodes.cannotContactBBXValidationServer
-                                                           userInfo:@{
-                                         NSLocalizedDescriptionKey : NSLocalizedString(@"Unable to contact the Beeblex validation server.", Nil)}];
+                                                           userInfo:[NSDictionary dictionaryWithObject:NSLocalizedString(@"Unable to contact the Beeblex validation server.", Nil)
+                                                                                                forKey:NSLocalizedDescriptionKey]];
                                    
                                    self.hasServerError = YES;
                                    self.running = NO;
@@ -211,8 +219,8 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
                                if (httpResponse.statusCode > 399 && httpResponse.statusCode < 500) {
                                    error = [NSError errorWithDomain:BBXIAPTransactionErrorCodes.domain
                                                                code:BBXIAPTransactionErrorCodes.clientError
-                                                           userInfo:@{
-                                         NSLocalizedDescriptionKey : [NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode]}];
+                                                           userInfo:[NSDictionary dictionaryWithObject:[NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode]
+                                                                                                forKey:NSLocalizedDescriptionKey]];
                                    
                                    self.hasClientError = YES;
                                    self.running = NO;
@@ -223,8 +231,8 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
                                if (httpResponse.statusCode > 499 && httpResponse.statusCode < 600) {
                                    error = [NSError errorWithDomain:BBXIAPTransactionErrorCodes.domain
                                                                code:BBXIAPTransactionErrorCodes.serverError
-                                                           userInfo:@{
-                                         NSLocalizedDescriptionKey : [NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode]}];
+                                                           userInfo:[NSDictionary dictionaryWithObject:[NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode]
+                                                                                                forKey:NSLocalizedDescriptionKey]];
                                    
                                    self.hasServerError = YES;
                                    self.running = NO;
@@ -237,8 +245,8 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
                                if (!data.length) {
                                    error = [NSError errorWithDomain:BBXIAPTransactionErrorCodes.domain
                                                                code:BBXIAPTransactionErrorCodes.cannotDecryptServerData
-                                                           userInfo:@{
-                                         NSLocalizedDescriptionKey : NSLocalizedString(@"Unable to decrypt the validation data.", Nil)}];
+                                                           userInfo:[NSDictionary dictionaryWithObject:NSLocalizedString(@"Unable to decrypt the validation data.", Nil)
+                                                                                                 forKey:NSLocalizedDescriptionKey]];
                                    
                                    self.hasServerError = YES;
                                    self.running = NO;
@@ -252,7 +260,8 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
                                    self.hasConfigurationError = YES;
                                    NSError *error = [[NSError alloc] initWithDomain:BBXIAPTransactionErrorCodes.domain
                                                                                code:BBXIAPTransactionErrorCodes.encryptionEngineCannotBeInitialized
-                                                                           userInfo:@{ NSLocalizedDescriptionKey :  NSLocalizedString(@"The encryption engine cannot be initialized.", Nil)}];
+                                                                           userInfo:[NSDictionary dictionaryWithObject:NSLocalizedString(@"The encryption engine cannot be initialized.", Nil)
+                                                                                                                forKey:NSLocalizedDescriptionKey]];;
                                    
                                    self.running = NO;
                                    completionBlock(error);
@@ -266,8 +275,8 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
                                if (!result) {
                                    error = [NSError errorWithDomain:BBXIAPTransactionErrorCodes.domain
                                                                code:BBXIAPTransactionErrorCodes.cannotDecryptServerData
-                                                           userInfo:@{
-                                         NSLocalizedDescriptionKey : NSLocalizedString(@"Unable to decrypt the validation data.", Nil)}];
+                                                           userInfo:[NSDictionary dictionaryWithObject:NSLocalizedString(@"Unable to decrypt the validation data.", Nil)
+                                                                                                forKey:NSLocalizedDescriptionKey]];
                                    
                                    self.hasServerError = YES;
                                    self.running = NO;
@@ -281,8 +290,8 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
                                if (!dictionary || ![dictionary isKindOfClass:[NSDictionary class]]) {
                                    error = [NSError errorWithDomain:BBXIAPTransactionErrorCodes.domain
                                                                code:BBXIAPTransactionErrorCodes.cannotDecryptServerData
-                                                           userInfo:@{
-                                         NSLocalizedDescriptionKey : NSLocalizedString(@"Unable to decrypt the validation data.", Nil)}];
+                                                           userInfo:[NSDictionary dictionaryWithObject:NSLocalizedString(@"Unable to decrypt the validation data.", Nil)
+                                                                                                forKey:NSLocalizedDescriptionKey]];
                                    
                                    self.hasServerError = YES;
                                    self.running = NO;
