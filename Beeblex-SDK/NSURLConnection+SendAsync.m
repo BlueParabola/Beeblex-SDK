@@ -31,11 +31,11 @@ typedef void (^URLConnectionCompletionHandler)(NSURLResponse *response, NSData *
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)theResponse {
     self.response = theResponse;
-    [data setLength:0]; // reset data
+    [self.data setLength:0]; // reset data
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)theData {
-    [data appendData:theData]; // append incoming data
+    [self.data appendData:theData]; // append incoming data
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
@@ -44,7 +44,7 @@ typedef void (^URLConnectionCompletionHandler)(NSURLResponse *response, NSData *
         // Avoid retain cycles
         URLConnectionCompletionHandler handlerCopy = self.handler;
         NSURLResponse *responseCopy = self.response;
-        [queue addOperationWithBlock:^{
+        [self.queue addOperationWithBlock:^{
             handlerCopy(responseCopy, nil, error);
         }];
     }
@@ -57,7 +57,7 @@ typedef void (^URLConnectionCompletionHandler)(NSURLResponse *response, NSData *
         URLConnectionCompletionHandler handlerCopy = self.handler;
         NSURLResponse *responseCopy = self.response;
         NSData *dataCopy = self.data;
-        [queue addOperationWithBlock:^{
+        [self.queue addOperationWithBlock:^{
             handlerCopy(responseCopy, dataCopy, nil);
         }];
     }
