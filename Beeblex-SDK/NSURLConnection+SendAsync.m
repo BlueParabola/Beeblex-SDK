@@ -40,12 +40,27 @@ typedef void (^URLConnectionCompletionHandler)(NSURLResponse *response, NSData *
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     self.data = nil;
-    if (handler) { [queue addOperationWithBlock:^{ handler(response, nil, error); }]; }
+    if (handler) {
+        // Avoid retain cycles
+        URLConnectionCompletionHandler handlerCopy = self.handler;
+        NSURLResponse *responseCopy = self.response;
+        [queue addOperationWithBlock:^{
+            handlerCopy(responseCopy, nil, error);
+        }];
+    }
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     // TODO: Are we passing the arguments to the block correctly? Should we copy them?
-    if (handler) { [queue addOperationWithBlock:^{ handler(response, data, nil); }]; }
+    if (handler) {
+        // Avoid retain cycles
+        URLConnectionCompletionHandler handlerCopy = self.handler;
+        NSURLResponse *responseCopy = self.response;
+        NSData *dataCopy = self.data;
+        [queue addOperationWithBlock:^{
+            handlerCopy(responseCopy, dataCopy, nil);
+        }];
+    }
 }
 
 @end
