@@ -1296,11 +1296,10 @@
     buffer = (unsigned char *)calloc(length*4, sizeof(unsigned char));
     NSAssert((buffer != NULL), @"Cannot calloc memory for buffer.");
 
-    if (!RAND_bytes(buffer, length)){
-        free(buffer);
+    if (RAND_bytes(buffer, length)){
+        randData = [NSData dataWithBytes:buffer length:length];
     }
 
-    randData = [NSData dataWithBytes:buffer length:length];
     free(buffer);
 
     return randData;

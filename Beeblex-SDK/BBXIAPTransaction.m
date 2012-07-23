@@ -107,7 +107,7 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
                              
                              _transaction.transactionIdentifier, @"transactionId",
                              
-                             @(self.useSandbox), @"useSandbox",
+                             [NSNumber numberWithBool:self.useSandbox], @"useSandbox",
                              
                              Nil];
 
