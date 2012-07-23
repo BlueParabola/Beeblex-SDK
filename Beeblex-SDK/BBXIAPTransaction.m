@@ -12,7 +12,6 @@
 #import "BBXIAPTransaction.h"
 
 #import "_BBXEncryptedTransaction.h"
-#import "_BBXCrypto.h"
 #import "_BBXReachability.h"
 #import "_BBXJSONKit.h"
 
@@ -97,10 +96,6 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
     
     self.hasRun = YES;
     self.running = YES;
-    
-    NSData *symmetricKey = [_BBXCrypto getKeyDataWithLength:8];
-    
-    NSAssert1(symmetricKey.length == 8, @"The secret key should be 8 bytes; %d found instead", symmetricKey.length);
     
     NSDictionary *payload = [NSDictionary dictionaryWithObjectsAndKeys:
                              [[NSString alloc] initWithData:_transaction.transactionReceipt

@@ -15,9 +15,6 @@
 		8F7A579915B5F870008C48A1 /* libBeeblex-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7A578115B5F870008C48A1 /* libBeeblex-SDK.a */; };
 		8F7A579F15B5F870008C48A1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8F7A579D15B5F870008C48A1 /* InfoPlist.strings */; };
 		8F7A57A215B5F870008C48A1 /* Beeblex_SDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57A115B5F870008C48A1 /* Beeblex_SDKTests.m */; };
-		8F7A57B215B5F8AA008C48A1 /* _BBXCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F7A57B015B5F8AA008C48A1 /* _BBXCrypto.h */; };
-		8F7A57B315B5F8AA008C48A1 /* _BBXCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57B115B5F8AA008C48A1 /* _BBXCrypto.m */; };
-		8F7A57B415B5F8AA008C48A1 /* _BBXCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57B115B5F8AA008C48A1 /* _BBXCrypto.m */; };
 		8F7A57BA15B5F8C2008C48A1 /* _BBXReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F7A57B815B5F8C2008C48A1 /* _BBXReachability.h */; };
 		8F7A57BB15B5F8C2008C48A1 /* _BBXReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57B915B5F8C2008C48A1 /* _BBXReachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8F7A57BC15B5F8C2008C48A1 /* _BBXReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57B915B5F8C2008C48A1 /* _BBXReachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -28,12 +25,10 @@
 		8F7A57C815B5F90A008C48A1 /* BBXIAPTransaction.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F7A57C615B5F90A008C48A1 /* BBXIAPTransaction.h */; };
 		8F7A57C915B5F90A008C48A1 /* BBXIAPTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57C715B5F90A008C48A1 /* BBXIAPTransaction.m */; };
 		8F7A57CA15B5F90A008C48A1 /* BBXIAPTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57C715B5F90A008C48A1 /* BBXIAPTransaction.m */; };
-		8F7A57CE15B5F9A4008C48A1 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7A57CC15B5F9A4008C48A1 /* libcrypto.a */; };
-		8F7A57CF15B5F9A4008C48A1 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7A57CC15B5F9A4008C48A1 /* libcrypto.a */; };
-		8F7A57D015B5F9A4008C48A1 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7A57CD15B5F9A4008C48A1 /* libssl.a */; };
-		8F7A57D115B5F9A4008C48A1 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7A57CD15B5F9A4008C48A1 /* libssl.a */; };
 		8F7A581615B5FAFC008C48A1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7A581515B5FAFC008C48A1 /* SystemConfiguration.framework */; };
 		8F7A582615B5FC6C008C48A1 /* SKPaymentTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A582515B5FC6C008C48A1 /* SKPaymentTransaction.m */; };
+		8F92177715BDBFAC00803BDD /* _BBXBase64.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F92177515BDBFAC00803BDD /* _BBXBase64.h */; };
+		8F92177815BDBFAC00803BDD /* _BBXBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F92177615BDBFAC00803BDD /* _BBXBase64.m */; };
 		EAA4D35E15B95FE200DA0298 /* NSURLConnection+SendAsync.h in Headers */ = {isa = PBXBuildFile; fileRef = EAA4D35C15B95FE200DA0298 /* NSURLConnection+SendAsync.h */; };
 		EAA4D35F15B95FE200DA0298 /* NSURLConnection+SendAsync.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA4D35D15B95FE200DA0298 /* NSURLConnection+SendAsync.m */; };
 		EAA4D36315BA39BB00DA0298 /* NSURLConnection+SendAsync.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA4D35D15B95FE200DA0298 /* NSURLConnection+SendAsync.m */; };
@@ -64,9 +59,6 @@
 		8F7A579E15B5F870008C48A1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8F7A57A015B5F870008C48A1 /* Beeblex_SDKTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Beeblex_SDKTests.h; sourceTree = "<group>"; };
 		8F7A57A115B5F870008C48A1 /* Beeblex_SDKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Beeblex_SDKTests.m; sourceTree = "<group>"; };
-		8F7A57B015B5F8AA008C48A1 /* _BBXCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _BBXCrypto.h; sourceTree = "<group>"; };
-		8F7A57B115B5F8AA008C48A1 /* _BBXCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _BBXCrypto.m; sourceTree = "<group>"; };
-		8F7A57B615B5F8B9008C48A1 /* openssl */ = {isa = PBXFileReference; lastKnownFileType = folder; path = openssl; sourceTree = "<group>"; };
 		8F7A57B815B5F8C2008C48A1 /* _BBXReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _BBXReachability.h; sourceTree = "<group>"; };
 		8F7A57B915B5F8C2008C48A1 /* _BBXReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _BBXReachability.m; sourceTree = "<group>"; };
 		8F7A57BE15B5F8EC008C48A1 /* BBXBeeblex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBXBeeblex.h; sourceTree = "<group>"; };
@@ -74,11 +66,11 @@
 		8F7A57C015B5F8EC008C48A1 /* BBXBeeblex_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBXBeeblex_Private.h; sourceTree = "<group>"; };
 		8F7A57C615B5F90A008C48A1 /* BBXIAPTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBXIAPTransaction.h; sourceTree = "<group>"; };
 		8F7A57C715B5F90A008C48A1 /* BBXIAPTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBXIAPTransaction.m; sourceTree = "<group>"; };
-		8F7A57CC15B5F9A4008C48A1 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
-		8F7A57CD15B5F9A4008C48A1 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
 		8F7A581515B5FAFC008C48A1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8F7A582415B5FC6C008C48A1 /* SKPaymentTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKPaymentTransaction.h; sourceTree = "<group>"; };
 		8F7A582515B5FC6C008C48A1 /* SKPaymentTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKPaymentTransaction.m; sourceTree = "<group>"; };
+		8F92177515BDBFAC00803BDD /* _BBXBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _BBXBase64.h; sourceTree = "<group>"; };
+		8F92177615BDBFAC00803BDD /* _BBXBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _BBXBase64.m; sourceTree = "<group>"; };
 		EAA4D35C15B95FE200DA0298 /* NSURLConnection+SendAsync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLConnection+SendAsync.h"; sourceTree = "<group>"; };
 		EAA4D35D15B95FE200DA0298 /* NSURLConnection+SendAsync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLConnection+SendAsync.m"; sourceTree = "<group>"; };
 		EADE7A5615B9457900A1306A /* _BBXJSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _BBXJSONKit.h; sourceTree = "<group>"; };
@@ -91,8 +83,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F7A578515B5F870008C48A1 /* Foundation.framework in Frameworks */,
-				8F7A57CE15B5F9A4008C48A1 /* libcrypto.a in Frameworks */,
-				8F7A57D015B5F9A4008C48A1 /* libssl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,8 +94,6 @@
 				8F7A579315B5F870008C48A1 /* SenTestingKit.framework in Frameworks */,
 				8F7A579615B5F870008C48A1 /* Foundation.framework in Frameworks */,
 				8F7A579915B5F870008C48A1 /* libBeeblex-SDK.a in Frameworks */,
-				8F7A57CF15B5F9A4008C48A1 /* libcrypto.a in Frameworks */,
-				8F7A57D115B5F9A4008C48A1 /* libssl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,8 +131,6 @@
 		8F7A578315B5F870008C48A1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8F7A57CC15B5F9A4008C48A1 /* libcrypto.a */,
-				8F7A57CD15B5F9A4008C48A1 /* libssl.a */,
 				8F7A581515B5FAFC008C48A1 /* SystemConfiguration.framework */,
 				8F7A578415B5F870008C48A1 /* Foundation.framework */,
 				8F7A579215B5F870008C48A1 /* SenTestingKit.framework */,
@@ -192,10 +178,10 @@
 		8F7A57AE15B5F899008C48A1 /* Private Classes */ = {
 			isa = PBXGroup;
 			children = (
+				8F92177415BDBF9D00803BDD /* Base64 */,
 				8F30EA8715B8888D00433825 /* Signed Request */,
 				EAA4D35615B95F4400DA0298 /* NSURLConnection+Async */,
 				EADE7A5515B9457900A1306A /* JSONKit */,
-				8F7A57B515B5F8AE008C48A1 /* Crypto */,
 				8F7A57BD15B5F8C5008C48A1 /* Reachability */,
 			);
 			name = "Private Classes";
@@ -208,16 +194,6 @@
 				8F7A57C515B5F8FB008C48A1 /* BBXBeeblex */,
 			);
 			name = "Public Classes";
-			sourceTree = "<group>";
-		};
-		8F7A57B515B5F8AE008C48A1 /* Crypto */ = {
-			isa = PBXGroup;
-			children = (
-				8F7A57B615B5F8B9008C48A1 /* openssl */,
-				8F7A57B015B5F8AA008C48A1 /* _BBXCrypto.h */,
-				8F7A57B115B5F8AA008C48A1 /* _BBXCrypto.m */,
-			);
-			name = Crypto;
 			sourceTree = "<group>";
 		};
 		8F7A57BD15B5F8C5008C48A1 /* Reachability */ = {
@@ -266,6 +242,15 @@
 			name = Mocks;
 			sourceTree = "<group>";
 		};
+		8F92177415BDBF9D00803BDD /* Base64 */ = {
+			isa = PBXGroup;
+			children = (
+				8F92177515BDBFAC00803BDD /* _BBXBase64.h */,
+				8F92177615BDBFAC00803BDD /* _BBXBase64.m */,
+			);
+			name = Base64;
+			sourceTree = "<group>";
+		};
 		EAA4D35615B95F4400DA0298 /* NSURLConnection+Async */ = {
 			isa = PBXGroup;
 			children = (
@@ -291,7 +276,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F7A57B215B5F8AA008C48A1 /* _BBXCrypto.h in Headers */,
 				8F7A57BA15B5F8C2008C48A1 /* _BBXReachability.h in Headers */,
 				8F7A57C115B5F8EC008C48A1 /* BBXBeeblex.h in Headers */,
 				8F7A57C415B5F8EC008C48A1 /* BBXBeeblex_Private.h in Headers */,
@@ -299,6 +283,7 @@
 				8F30EA8B15B888A200433825 /* _BBXEncryptedTransaction.h in Headers */,
 				EADE7A5815B9457900A1306A /* _BBXJSONKit.h in Headers */,
 				EAA4D35E15B95FE200DA0298 /* NSURLConnection+SendAsync.h in Headers */,
+				8F92177715BDBFAC00803BDD /* _BBXBase64.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,13 +413,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F7A57B315B5F8AA008C48A1 /* _BBXCrypto.m in Sources */,
 				8F7A57BB15B5F8C2008C48A1 /* _BBXReachability.m in Sources */,
 				8F7A57C215B5F8EC008C48A1 /* BBXBeeblex.m in Sources */,
 				8F7A57C915B5F90A008C48A1 /* BBXIAPTransaction.m in Sources */,
 				8F30EA8C15B888A200433825 /* _BBXEncryptedTransaction.m in Sources */,
 				EADE7A5915B9457900A1306A /* _BBXJSONKit.m in Sources */,
 				EAA4D35F15B95FE200DA0298 /* NSURLConnection+SendAsync.m in Sources */,
+				8F92177815BDBFAC00803BDD /* _BBXBase64.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,7 +428,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F7A57A215B5F870008C48A1 /* Beeblex_SDKTests.m in Sources */,
-				8F7A57B415B5F8AA008C48A1 /* _BBXCrypto.m in Sources */,
 				8F7A57BC15B5F8C2008C48A1 /* _BBXReachability.m in Sources */,
 				8F7A57C315B5F8EC008C48A1 /* BBXBeeblex.m in Sources */,
 				8F7A57CA15B5F90A008C48A1 /* BBXIAPTransaction.m in Sources */,

@@ -36,7 +36,7 @@ extern const struct BBXBeeblexErrorCodes {
 
 // The RSA public key generated from the API key
 
-@property (nonatomic, readonly) NSString *publicKey;
+@property (nonatomic, readonly) SecKeyRef publicKey;
 
 
 // You should call this method from your app's application

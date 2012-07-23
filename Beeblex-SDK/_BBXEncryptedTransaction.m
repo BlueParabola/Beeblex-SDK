@@ -10,13 +10,80 @@
 
 #import "BBXBeeblex.h"
 #import "BBXBeeblex_Private.h"
-
-#import "_BBXCrypto.h"
+#import "_BBXBase64.h"
 
 #import "JSONKit/_BBXJSONKit.h"
 
+#import <CommonCrypto/CommonDigest.h>
+#import <CommonCrypto/CommonCryptor.h>
+
 
 @implementation _BBXEncryptedTransaction
+
+
++ (NSData *) _getKeyDataWithLength:(NSInteger) length {
+    uint8_t *bytes;
+    
+    bytes = malloc(length);
+    
+    if (!bytes) {
+        return Nil;
+    }
+    
+    if (SecRandomCopyBytes(kSecRandomDefault,
+                             length,
+                             bytes)) {
+        free(bytes);
+        return Nil;
+    }
+    
+    NSData *result = [NSData dataWithBytes:bytes length:length];
+    
+    free(bytes);
+    
+    return result;
+}
+
+
++ (NSData *) _processedDataFromData:(NSData *) data withSymmetricKey:(NSData *) signature encrypt:(BOOL) encrypt {
+    unsigned char symmetricKey[16];
+    unsigned char iv[16];
+    
+    CC_MD5(signature.bytes, signature.length, symmetricKey);
+    
+    NSMutableData *hash = [NSMutableData dataWithBytes:symmetricKey length:16];
+    [hash appendData:signature];
+    
+    CC_MD5(hash.bytes, hash.length, iv);
+    
+    unsigned long outputLength = 0;
+    unsigned char *outputData = malloc(data.length + 8);
+    
+    NSAssert(outputData, @"Memory allocation error.");
+    
+    if (CCCrypt(encrypt ? kCCEncrypt : kCCDecrypt,
+                kCCAlgorithmBlowfish,
+                ccPKCS7Padding,
+                &symmetricKey,
+                16,
+                &iv,
+                data.bytes,
+                data.length,
+                outputData,
+                data.length + 8,
+                &outputLength) != kCCSuccess) {
+        
+        free(outputData);
+        return Nil;
+        
+    }
+    
+    NSData *result = [NSData dataWithBytes:outputData length:outputLength];
+    
+    free(outputData);
+    
+    return result;
+}
 
 
 + (void) processTransactionWithPayload:(NSData *)payload errorDomain:(NSString *)errorDomain callback:(BBXEncryptedTransactionResultBlock)completionBlock {
@@ -25,41 +92,41 @@
     void(^errorBlock)(NSString *errorString) = ^(NSString *errorString) {
         NSError *error = [[NSError alloc] initWithDomain:errorDomain
                                                     code:BBXBeeblexErrorCodes.serverError
-                                                userInfo:[NSDictionary dictionaryWithObject:NSLocalizedString(@"The encryption engine cannot be initialized.", Nil)
+                                                userInfo:[NSDictionary dictionaryWithObject:errorString
                                                                                      forKey:NSLocalizedDescriptionKey]];
         completionBlock(Nil, error);
     };
         
-    NSData *symmetricKey = [_BBXCrypto getKeyDataWithLength:8];
+    NSData *symmetricKey = [self.class _getKeyDataWithLength:8];
     
     NSAssert1(symmetricKey.length == 8, @"The secret key should be 8 bytes; %d found instead", symmetricKey.length);
     
-    _BBXCrypto *crypto = [[_BBXCrypto alloc] initWithSymmetricKey:symmetricKey];
-    
-    if (!crypto) {
-        errorBlock(NSLocalizedString(@"The encryption engine cannot be initialized.", Nil));
-        return;
-    }
-    
-    [crypto setClearTextWithData:payload];
-    NSData *cypherText = [crypto encrypt:@"blowfish"];
+    NSData *cypherText = [self _processedDataFromData:payload withSymmetricKey:symmetricKey encrypt:YES];
     
     if (!cypherText) {
-        errorBlock(NSLocalizedString(@"Cannot generate an encryption key.", Nil));
+        errorBlock(NSLocalizedString(@"Cannot encrypt main payload using a symmetric algorithm.", Nil));
         return;
     }
+
+    unsigned char *encryptedData = malloc(1024);
     
+    NSAssert(encryptedData, @"Memory allocation error.");
+
+    unsigned long length = 1024; // Ought to be more than enough
     
-    crypto = [[_BBXCrypto alloc] initWithPublicKey:[beeblex.publicKey dataUsingEncoding:NSASCIIStringEncoding]];
+    OSStatus error = SecKeyEncrypt(beeblex.publicKey,
+                                   kSecPaddingPKCS1,
+                                   symmetricKey.bytes,
+                                   symmetricKey.length,
+                                   encryptedData,
+                                   &length);
     
-    if (!crypto) {
-        errorBlock(NSLocalizedString(@"Cannot generate public key.", Nil));
+    if (error) {
+        errorBlock([NSString stringWithFormat:NSLocalizedString(@"Unable to sign transaction: OSStatus error %ld.", Nil), error]);
         return;
     }
-    
-    [crypto setClearTextWithData:symmetricKey];
-    
-    NSData *signature = [crypto signPublic];
+
+    NSData *signature = [NSData dataWithBytes:encryptedData length:length];
     
     if (!signature) {
         errorBlock(NSLocalizedString(@"Cannot encrypt symmetric key.", Nil));
@@ -67,8 +134,8 @@
     }
     
     NSDictionary *finalPayload = [NSDictionary dictionaryWithObjectsAndKeys:
-                                  [_BBXCrypto encodeBase64:signature WithNewlines:NO], @"signature",
-                                  [_BBXCrypto encodeBase64:cypherText WithNewlines:NO], @"payload",
+                                  [_BBXBase64 base64EncodedStringFromData:signature], @"signature",
+                                  [_BBXBase64 base64EncodedStringFromData:cypherText], @"payload",
                                   Nil];
     
     NSData *jsonData = [finalPayload JSONDataWithOptions:JKSerializeOptionNone error:Nil];
@@ -112,23 +179,14 @@
                                    return;
                                }
                                
-                               data = [_BBXCrypto decodeBase64:data WithNewLines:NO];
+                               data = [_BBXBase64 dataFromBase64String:[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]];
                                
                                if (!data.length) {
                                    errorBlock(NSLocalizedString(@"Unable to decrypt the validation data.", Nil));
                                    return;
                                }
                                
-                               _BBXCrypto *crypto = [[_BBXCrypto alloc] initWithSymmetricKey:symmetricKey];
-                               
-                               if (!crypto) {
-                                   errorBlock(NSLocalizedString(@"The encryption engine cannot be initialized.", Nil));
-                                   return;
-                               }
-                               
-                               [crypto setCipherText:data];
-                               
-                               NSData *resultData = [crypto decrypt:@"blowfish"];
+                               NSData *resultData = [self _processedDataFromData:data withSymmetricKey:symmetricKey encrypt:NO];
                                
                                if (!resultData) {
                                    errorBlock(NSLocalizedString(@"Unable to decrypt the data return by the Beeblex server.", Nil));
