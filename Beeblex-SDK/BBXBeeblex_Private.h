@@ -12,10 +12,16 @@
 @interface BBXBeeblex ()
 
 
+@property (nonatomic) BOOL _useSSL;
+
+
 + (BBXBeeblex *) _globalInstance;
 
 + (NSString *) _baseURL;
 + (NSString *) _baseSecureURL;
+
+
+- (NSString *) _currentBaseURL;
 
 
 @end

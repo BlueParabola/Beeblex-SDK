@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F30EA8B15B888A200433825 /* _BBXEncryptedTransaction.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F30EA8915B888A200433825 /* _BBXEncryptedTransaction.h */; };
+		8F30EA8C15B888A200433825 /* _BBXEncryptedTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F30EA8A15B888A200433825 /* _BBXEncryptedTransaction.m */; };
 		8F7A578515B5F870008C48A1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7A578415B5F870008C48A1 /* Foundation.framework */; };
 		8F7A579315B5F870008C48A1 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7A579215B5F870008C48A1 /* SenTestingKit.framework */; };
 		8F7A579615B5F870008C48A1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7A578415B5F870008C48A1 /* Foundation.framework */; };
@@ -46,6 +48,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8F30EA8915B888A200433825 /* _BBXEncryptedTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _BBXEncryptedTransaction.h; sourceTree = "<group>"; };
+		8F30EA8A15B888A200433825 /* _BBXEncryptedTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _BBXEncryptedTransaction.m; sourceTree = "<group>"; };
 		8F7A578115B5F870008C48A1 /* libBeeblex-SDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libBeeblex-SDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F7A578415B5F870008C48A1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8F7A578815B5F870008C48A1 /* Beeblex-SDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Beeblex-SDK-Prefix.pch"; sourceTree = "<group>"; };
@@ -99,6 +103,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8F30EA8715B8888D00433825 /* Signed Request */ = {
+			isa = PBXGroup;
+			children = (
+				8F30EA8915B888A200433825 /* _BBXEncryptedTransaction.h */,
+				8F30EA8A15B888A200433825 /* _BBXEncryptedTransaction.m */,
+			);
+			name = "Signed Request";
+			sourceTree = "<group>";
+		};
 		8F7A577415B5F870008C48A1 = {
 			isa = PBXGroup;
 			children = (
@@ -170,6 +183,7 @@
 		8F7A57AE15B5F899008C48A1 /* Private Classes */ = {
 			isa = PBXGroup;
 			children = (
+				8F30EA8715B8888D00433825 /* Signed Request */,
 				8F7A57B515B5F8AE008C48A1 /* Crypto */,
 				8F7A57BD15B5F8C5008C48A1 /* Reachability */,
 			);
@@ -253,6 +267,7 @@
 				8F7A57C115B5F8EC008C48A1 /* BBXBeeblex.h in Headers */,
 				8F7A57C415B5F8EC008C48A1 /* BBXBeeblex_Private.h in Headers */,
 				8F7A57C815B5F90A008C48A1 /* BBXIAPTransaction.h in Headers */,
+				8F30EA8B15B888A200433825 /* _BBXEncryptedTransaction.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,6 +402,7 @@
 				8F7A57BB15B5F8C2008C48A1 /* _BBXReachability.m in Sources */,
 				8F7A57C215B5F8EC008C48A1 /* BBXBeeblex.m in Sources */,
 				8F7A57C915B5F90A008C48A1 /* BBXIAPTransaction.m in Sources */,
+				8F30EA8C15B888A200433825 /* _BBXEncryptedTransaction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

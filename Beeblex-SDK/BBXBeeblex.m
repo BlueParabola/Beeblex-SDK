@@ -13,10 +13,13 @@
 
 
 const struct BBXBeeblexExceptionNames BBXBeeblexExceptionNames = {
-    .invalidApiKey = @"BBXInvalidAPIKeyException",
-    .invalidSKPaymentTransaction = @"invalidSKPaymentTransaction",
+    .configurationTransactionException = @"BBXConfigurationTransactionException"
+};
+
+const struct BBXBeeblexErrorCodes BBXBeeblexErrorCodes = {
+    .serverError = -1000,
     
-    .cannotRecycleVerificationRequest = @"BBXCannotRecycleVerificationRequest"
+    .iapValidationError = -2000
 };
 
 
@@ -33,6 +36,8 @@ const struct BBXBeeblexExceptionNames BBXBeeblexExceptionNames = {
 @synthesize apiKey = _apiKey;
 @synthesize publicKey = _publicKey;
 
+@synthesize _useSSL = __useSSL;
+
 
 #pragma mark - API Key Manipulation
 
@@ -44,7 +49,7 @@ const struct BBXBeeblexExceptionNames BBXBeeblexExceptionNames = {
     NSString *str = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
     
     if (!str.length) {
-        @throw [NSException exceptionWithName:BBXBeeblexExceptionNames.invalidApiKey
+        @throw [NSException exceptionWithName:BBXBeeblexExceptionNames.configurationTransactionException
                                        reason:NSLocalizedString(@"Invalid API Key. Please check your key and try again.", Nil)
                                      userInfo:Nil];
     }
@@ -52,7 +57,7 @@ const struct BBXBeeblexExceptionNames BBXBeeblexExceptionNames = {
     NSArray *components = [str componentsSeparatedByString:@","];
     
     if (components.count != 2) {
-        @throw [NSException exceptionWithName:BBXBeeblexExceptionNames.invalidApiKey
+        @throw [NSException exceptionWithName:BBXBeeblexExceptionNames.configurationTransactionException
                                        reason:NSLocalizedString(@"Invalid API Key. Please check your key and try again.", Nil)
                                      userInfo:Nil];
     }
@@ -61,12 +66,32 @@ const struct BBXBeeblexExceptionNames BBXBeeblexExceptionNames = {
     self.publicKey = [components objectAtIndex:1];
     
     if (self.apiKey.length != 128) {
-        @throw [NSException exceptionWithName:BBXBeeblexExceptionNames.invalidApiKey
+        @throw [NSException exceptionWithName:BBXBeeblexExceptionNames.configurationTransactionException
                                        reason:NSLocalizedString(@"Invalid API Key. Please check your key and try again.", Nil)
                                      userInfo:Nil];
     }
     
     return YES;
+}
+
+
+#pragma mark - URLs
+
+
++ (NSString *) _baseURL {
+    //    return @"http://beeblex.local/api/v1";
+    return @"http://www.beeblex.com/api/v1";
+}
+
+
++ (NSString *) _baseSecureURL {
+    //    return @"http://beeblex.local/api/v1";
+    return @"https://www.beeblex.com/api/v1";
+}
+
+
+- (NSString *) _currentBaseURL {
+    return self._useSSL ? [self.class _baseSecureURL] : [self.class _baseURL];
 }
 
 
@@ -91,19 +116,12 @@ const struct BBXBeeblexExceptionNames BBXBeeblexExceptionNames = {
 
 
 + (NSString *) versionNumber {
-    return @"1.0 (Samba)";
+    return @"1.0 beta 2 (Samba)";
 }
 
 
-+ (NSString *) _baseURL {
-//    return @"http://beeblex.local/api/v1";
-    return @"http://www.beeblex.com/api/v1";
-}
-
-
-+ (NSString *) _baseSecureURL {
-//    return @"http://beeblex.local/api/v1";
-    return @"https://www.beeblex.com/api/v1";
++ (void) setUseSSL:(BOOL)useSSL {
+    [self _globalInstance]._useSSL = YES;
 }
 
 

@@ -14,22 +14,18 @@
 
 extern const struct BBXBeeblexExceptionNames {
     
-    // An invalid API Key was provided
-    
-    __unsafe_unretained NSString *invalidApiKey;
-    
-    // An invalid payment transaction was sent. Usually.
-    // That means the transaction is not completed or restored.
-    
-    __unsafe_unretained NSString *invalidSKPaymentTransaction;
-    
-    // Thrown when you attempt to use an instance of BBXIAPTransaction
-    // more than once. You should create a new instance each time
-    // you want to verify a receipt.
-    
-    __unsafe_unretained NSString *cannotRecycleVerificationRequest;
+    __unsafe_unretained NSString *configurationTransactionException;
     
 } BBXBeeblexExceptionNames;
+
+
+extern const struct BBXBeeblexErrorCodes {
+    
+    NSInteger serverError;
+    
+    NSInteger iapValidationError;
+    
+} BBXBeeblexErrorCodes;
 
 
 @interface BBXBeeblex : NSObject
@@ -51,6 +47,11 @@ extern const struct BBXBeeblexExceptionNames {
 // Returns the library's current version number.
 
 + (NSString *) versionNumber;
+
+// Pass YES to this method to turn SSL encryption between
+// the SDK and Beeblex's servers
+
++ (void) setUseSSL:(BOOL) useSSL;
 
 
 @end

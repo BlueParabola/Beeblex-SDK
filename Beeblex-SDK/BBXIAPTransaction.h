@@ -20,47 +20,6 @@ extern const struct BBXIAPTransactionErrorCodes {
     
     __unsafe_unretained NSString *domain;
     
-    // No error
-    
-    NSInteger success;
-    
-    // Initialization errors
-    
-    NSInteger initializationErrors;
-
-    // Open SSL refuses to initialize.
-    
-    NSInteger encryptionEngineCannotBeInitialized;
-    
-    
-    // Remote Errors (occur during network comms). These
-    // should be considered temporary and should not
-    // be taken to invalidate a transaction.
-    
-    NSInteger remoteErrors;
-    
-    // For some reason, the app cannot contact the remote
-    // server. If +canValidateTransaction return YES and
-    // this error occurs repeatedly, it's possible that an
-    // attacker is attempting to block access to the Beeblex
-    // server.
-    
-    NSInteger cannotContactBBXValidationServer;
-    
-    // Data from the server could not be decrypted. It's possible
-    // that your app record no longer exists (i.e.: you deleted it),
-    // or that a temporary problem has occurred.
-    
-    NSInteger cannotDecryptServerData;
-    
-    // A client error occurred (HTTP errors 400–499)
-    
-    NSInteger clientError;
-    
-    // A server error occurred (HTTP errors 400–599)
-    
-    NSInteger serverError;
-    
 } BBXIAPTransactionErrorCodes;
 
 
@@ -88,7 +47,7 @@ typedef void(^BBXAPITransactionCompletionBlock)(NSError *error);
 
 // Note that the library logs a warning when this is the case.
 
-@property (nonatomic) BOOL useSecureConnection;
+@property (nonatomic) DEPRECATED_ATTRIBUTE BOOL useSecureConnection;
 
 // Whether the transaction is running
 
@@ -106,15 +65,15 @@ typedef void(^BBXAPITransactionCompletionBlock)(NSError *error);
 // Note that a configuration error *must* be fixed before you
 // shipped the app, or the service will never work!
 
-@property (nonatomic, readonly) BOOL hasConfigurationError;
-@property (nonatomic, readonly) BOOL hasClientError;
+@property (nonatomic, readonly) DEPRECATED_ATTRIBUTE BOOL hasConfigurationError;
+@property (nonatomic, readonly) DEPRECATED_ATTRIBUTE BOOL hasClientError;
 @property (nonatomic, readonly) BOOL hasServerError;
 
 // If YES, the library believes that it has received an
 // obsolete response from the server. It's possible someone
 // is trying to perform a man-in-the-middle attack.
 
-@property (nonatomic, readonly) BOOL validationExpired;
+@property (nonatomic, readonly) DEPRECATED_ATTRIBUTE BOOL validationExpired;
 
 // If YES, the transaction has been successfully validated against
 // Apple servers.

@@ -11,29 +11,13 @@
 
 #import "BBXIAPTransaction.h"
 
+#import "_BBXEncryptedTransaction.h"
 #import "_BBXCrypto.h"
 #import "_BBXReachability.h"
 
 
 const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
-    .domain = @"BBXIAPTransactionDomain",
-    
-    .success = 0,
-
-    // Initialization Errors
-    
-    .initializationErrors = 1000,
-    .encryptionEngineCannotBeInitialized = 1000,
-    
-    // Remote Errors
-    
-    .remoteErrors = 2000,
-    
-    .cannotContactBBXValidationServer = 2000,
-    .cannotDecryptServerData = 2001,
-    .clientError = 2002,
-    .serverError = 2003
-
+    .domain = @"BBXIAPTransactionDomain"
 };
 
 
@@ -78,13 +62,32 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
 @synthesize validatedTransactionData = _validatedTransactionData;
 
 
+#pragma mark - Properties
+
+
+- (void) setUseSecureConnection:(BOOL)useSecureConnection {
+    NSLog(@"Warning: @useSecureConnection is deprecated and will be removed from future versions of the SDK. Use +[BBXBeeblex setUseSSL:] instead.");
+    [BBXBeeblex setUseSSL:useSecureConnection];
+}
+
+
+- (BOOL) useSecureConnection {
+    return [BBXBeeblex _globalInstance]._useSSL;
+}
+
+
+- (BOOL) hasClientError {
+    NSLog(@"Warning: @hasClientError is deprecated and will be removed from future versions of the SDK. Use @hasServerError instead.");
+    return self.hasServerError;
+}
+
+
 #pragma mark - Validation
 
 
 - (void) validateWithCompletionBlock:(BBXAPITransactionCompletionBlock)completionBlock {
     if (self.hasRun) {
-        self.hasConfigurationError = YES;
-        @throw [NSException exceptionWithName:BBXBeeblexExceptionNames.cannotRecycleVerificationRequest
+        @throw [NSException exceptionWithName:BBXBeeblexExceptionNames.configurationTransactionException
                                        reason:NSLocalizedString(@"BBXAPITransaction objects cannot be reused.", Nil)
                                      userInfo:Nil];
     }
@@ -103,206 +106,61 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
         @"transactionId"    : _transaction.transactionIdentifier,
         @"useSandbox"       : @(self.useSandbox)
     };
+    
+    NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:payload
+                                                          options:0
+                                                            error:Nil];
+    
+    [_BBXEncryptedTransaction
+     processTransactionWithPayload:jsonPayload
+     errorDomain:BBXIAPTransactionErrorCodes.domain
+     callback:^(id response, NSError *error) {
+         if (error) {
+             self.hasServerError = YES;
+             self.running = NO;
+             
+             completionBlock(error);
+             return;
+         }
+         
+         NSDictionary *dictionary = (NSDictionary *) response;
+         
+         if (!dictionary || ![dictionary isKindOfClass:[NSDictionary class]]) {
+             error = [NSError errorWithDomain:BBXIAPTransactionErrorCodes.domain
+                                         code:BBXBeeblexErrorCodes.serverError
+                                     userInfo:@{
+                   NSLocalizedDescriptionKey : NSLocalizedString(@"The validation data returned by the server was of the wrong type.", Nil)}];
+             
+             self.hasServerError = YES;
+             self.running = NO;
+             completionBlock(error);
+             return;
+         }
 
-    _BBXCrypto *crypto = [[_BBXCrypto alloc] initWithSymmetricKey:symmetricKey];
-    
-    if (!crypto) {
-        self.hasConfigurationError = YES;
-        NSError *error = [[NSError alloc] initWithDomain:BBXIAPTransactionErrorCodes.domain
-                                                    code:BBXIAPTransactionErrorCodes.encryptionEngineCannotBeInitialized
-                                                userInfo:@{ NSLocalizedDescriptionKey :  NSLocalizedString(@"The encryption engine cannot be initialized.", Nil)}];
-        
-        self.running = NO;
-        completionBlock(error);
-        return;
-    }
-    
-    [crypto setClearTextWithData:[NSJSONSerialization dataWithJSONObject:payload
-                                                                          options:0
-                                                                            error:Nil]];
-    NSData *cypherText = [crypto encrypt:@"blowfish"];
-    
-    if (!cypherText) {
-        self.hasConfigurationError = YES;
-        NSError *error = [[NSError alloc] initWithDomain:BBXIAPTransactionErrorCodes.domain
-                                                    code:BBXIAPTransactionErrorCodes.encryptionEngineCannotBeInitialized
-                                                userInfo:@{ NSLocalizedDescriptionKey :  NSLocalizedString(@"Cannot generate encryption key.", Nil)}];
-        
-        self.running = NO;
-        completionBlock(error);
-        return;
-    }
+         NSDate *expirationDate = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:@"expires"] floatValue]];
+         
+         if ([[NSDate date] earlierDate:expirationDate] == expirationDate) {
+             error = [NSError errorWithDomain:BBXIAPTransactionErrorCodes.domain
+                                         code:BBXBeeblexErrorCodes.iapValidationError
+                                     userInfo:@{
+                   NSLocalizedDescriptionKey : NSLocalizedString(@"The validation data returned by the server has expired.", Nil)}];
+         
+             self.running = NO;
+             completionBlock(error);
+         }
+         
+         NSDictionary *iapData = [dictionary objectForKey:@"iapData"];
+         
+         if (![[iapData objectForKey:@"status"] integerValue]) {
+             self.transactionVerified = YES;
+             self.validatedTransactionData = iapData;
+             self.transactionIsDuplicate = [[dictionary objectForKey:@"duplicate"] boolValue];
+         }
+         
+         completionBlock(Nil);
+         
+     }];
 
-    
-    crypto = [[_BBXCrypto alloc] initWithPublicKey:[[BBXBeeblex _globalInstance].publicKey dataUsingEncoding:NSASCIIStringEncoding]];
-    
-    if (!crypto) {
-        self.hasConfigurationError = YES;
-        NSError *error = [[NSError alloc] initWithDomain:BBXIAPTransactionErrorCodes.domain
-                                                    code:BBXIAPTransactionErrorCodes.encryptionEngineCannotBeInitialized
-                                                userInfo:@{ NSLocalizedDescriptionKey :  NSLocalizedString(@"Cannot generate public key.", Nil)}];
-        
-        self.running = NO;
-        completionBlock(error);
-        return;
-    }
-    
-    [crypto setClearTextWithData:symmetricKey];
-    
-    NSData *signature = [crypto signPublic];
-
-    if (!signature) {
-        self.hasConfigurationError = YES;
-        NSError *error = [[NSError alloc] initWithDomain:BBXIAPTransactionErrorCodes.domain
-                                                    code:BBXIAPTransactionErrorCodes.encryptionEngineCannotBeInitialized
-                                                userInfo:@{ NSLocalizedDescriptionKey :  NSLocalizedString(@"Cannot encrypt symmetric key.", Nil)}];
-        
-        self.running = NO;
-        completionBlock(error);
-        return;
-    }
-    
-    NSDictionary *finalPayload = @{
-        @"signature" : [_BBXCrypto encodeBase64:signature WithNewlines:NO],
-        @"payload" : [_BBXCrypto encodeBase64:cypherText WithNewlines:NO]
-    };
-    
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:finalPayload
-                                                       options:0
-                                                         error:Nil];
-    
-    NSAssert(jsonData, @"Unable to create JSON payload");
-    
-    if (!self.useSecureConnection) {
-        NSLog(@"Warning: Beeblex is not using HTTPS to connect to the server, most likely due to export compliance reasons. This is not necessarily a problem, but we thought you should know.");
-    }
-    
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/app/%@/verify",
-                                       self.useSecureConnection ? [BBXBeeblex _baseSecureURL] : [BBXBeeblex _baseURL],
-                                       [BBXBeeblex _globalInstance].apiKey]];
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
-    request.HTTPMethod = @"POST";
-    request.HTTPBody = jsonData;
-    
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               if (!data || error) {
-                                   error = [NSError errorWithDomain:BBXIAPTransactionErrorCodes.domain
-                                                               code:BBXIAPTransactionErrorCodes.cannotContactBBXValidationServer
-                                                           userInfo:@{
-                                         NSLocalizedDescriptionKey : NSLocalizedString(@"Unable to contact the Beeblex validation server.", Nil)}];
-
-                                   self.hasServerError = YES;
-                                   self.running = NO;
-                                   completionBlock(error);
-                                   return;
-                               }
-                               
-                               NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
-
-                               if (httpResponse.statusCode > 399 && httpResponse.statusCode < 500) {
-                                   error = [NSError errorWithDomain:BBXIAPTransactionErrorCodes.domain
-                                                               code:BBXIAPTransactionErrorCodes.clientError
-                                                           userInfo:@{
-                                         NSLocalizedDescriptionKey : [NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode]}];
-                                   
-                                   self.hasClientError = YES;
-                                   self.running = NO;
-                                   completionBlock(error);
-                                   return;
-                               }
-                               
-                               if (httpResponse.statusCode > 499 && httpResponse.statusCode < 600) {
-                                   error = [NSError errorWithDomain:BBXIAPTransactionErrorCodes.domain
-                                                               code:BBXIAPTransactionErrorCodes.serverError
-                                                           userInfo:@{
-                                         NSLocalizedDescriptionKey : [NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode]}];
-                                   
-                                   self.hasServerError = YES;
-                                   self.running = NO;
-                                   completionBlock(error);
-                                   return;
-                               }
-                               
-                               data = [_BBXCrypto decodeBase64:data WithNewLines:NO];
-                               
-                               if (!data.length) {
-                                   error = [NSError errorWithDomain:BBXIAPTransactionErrorCodes.domain
-                                                               code:BBXIAPTransactionErrorCodes.cannotDecryptServerData
-                                                           userInfo:@{
-                                         NSLocalizedDescriptionKey : NSLocalizedString(@"Unable to decrypt the validation data.", Nil)}];
-                                   
-                                   self.hasServerError = YES;
-                                   self.running = NO;
-                                   completionBlock(error);
-                                   return;
-                               }
-                               
-                               _BBXCrypto *crypto = [[_BBXCrypto alloc] initWithSymmetricKey:symmetricKey];
-                               
-                               if (!crypto) {
-                                   self.hasConfigurationError = YES;
-                                   NSError *error = [[NSError alloc] initWithDomain:BBXIAPTransactionErrorCodes.domain
-                                                                               code:BBXIAPTransactionErrorCodes.encryptionEngineCannotBeInitialized
-                                                                           userInfo:@{ NSLocalizedDescriptionKey :  NSLocalizedString(@"The encryption engine cannot be initialized.", Nil)}];
-                                   
-                                   self.running = NO;
-                                   completionBlock(error);
-                                   return;
-                               }
-
-                               [crypto setCipherText:data];
-                               
-                               NSData *result = [crypto decrypt:@"blowfish"];
-                               
-                               if (!result) {
-                                   error = [NSError errorWithDomain:BBXIAPTransactionErrorCodes.domain
-                                                               code:BBXIAPTransactionErrorCodes.cannotDecryptServerData
-                                                           userInfo:@{
-                                         NSLocalizedDescriptionKey : NSLocalizedString(@"Unable to decrypt the validation data.", Nil)}];
-                                   
-                                   self.hasServerError = YES;
-                                   self.running = NO;
-                                   completionBlock(error);
-                                   return;
-                               }
-
-                               NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:result
-                                                                                          options:0
-                                                                                            error:&error];
-                               
-                               if (!dictionary || ![dictionary isKindOfClass:[NSDictionary class]]) {
-                                   error = [NSError errorWithDomain:BBXIAPTransactionErrorCodes.domain
-                                                               code:BBXIAPTransactionErrorCodes.cannotDecryptServerData
-                                                           userInfo:@{
-                                         NSLocalizedDescriptionKey : NSLocalizedString(@"Unable to decrypt the validation data.", Nil)}];
-                                   
-                                   self.hasServerError = YES;
-                                   self.running = NO;
-                                   completionBlock(error);
-                                   return;
-                               }
-                               
-                               NSDate *expirationDate = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:@"expires"] floatValue]];
-                               
-                               if ([[NSDate date] earlierDate:expirationDate] == expirationDate) {
-                                   self.validationExpired = YES;
-                                   self.running = NO;
-                                   completionBlock(Nil);
-                               }
-                               
-                               NSDictionary *iapData = [dictionary objectForKey:@"iapData"];
-                               
-                               if (![[iapData objectForKey:@"status"] integerValue]) {
-                                   self.transactionVerified = YES;
-                                   self.validatedTransactionData = iapData;
-                                   self.transactionIsDuplicate = [[dictionary objectForKey:@"duplicate"] boolValue];
-                               }
-     
-                               completionBlock(Nil);
-                           }];
 }
 
 
@@ -314,7 +172,7 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
     
     if (self) {
         if (transaction.transactionState != SKPaymentTransactionStatePurchased && transaction.transactionState != SKPaymentTransactionStateRestored) {
-            @throw [NSException exceptionWithName:BBXBeeblexExceptionNames.invalidSKPaymentTransaction
+            @throw [NSException exceptionWithName:BBXBeeblexExceptionNames.configurationTransactionException
                                            reason:@"This transaction is not in a purchased or restored state"
                                          userInfo:Nil];
         }
