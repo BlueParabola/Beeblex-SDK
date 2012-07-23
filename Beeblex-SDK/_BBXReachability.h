@@ -131,9 +131,9 @@ enum {
 };
 
 
-extern NSString *const kInternetConnection;
-extern NSString *const kLocalWiFiConnection;
-extern NSString *const kReachabilityChangedNotification;
+extern NSString *const kBBXInternetConnection;
+extern NSString *const kBBXLocalWiFiConnection;
+extern NSString *const kBBXReachabilityChangedNotification;
 
 @interface _BBXReachability: NSObject {
 	

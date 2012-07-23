@@ -18,7 +18,6 @@
 		8F7A57B215B5F8AA008C48A1 /* _BBXCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F7A57B015B5F8AA008C48A1 /* _BBXCrypto.h */; };
 		8F7A57B315B5F8AA008C48A1 /* _BBXCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57B115B5F8AA008C48A1 /* _BBXCrypto.m */; };
 		8F7A57B415B5F8AA008C48A1 /* _BBXCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57B115B5F8AA008C48A1 /* _BBXCrypto.m */; };
-		8F7A57B715B5F8B9008C48A1 /* openssl in Resources */ = {isa = PBXBuildFile; fileRef = 8F7A57B615B5F8B9008C48A1 /* openssl */; };
 		8F7A57BA15B5F8C2008C48A1 /* _BBXReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F7A57B815B5F8C2008C48A1 /* _BBXReachability.h */; };
 		8F7A57BB15B5F8C2008C48A1 /* _BBXReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57B915B5F8C2008C48A1 /* _BBXReachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8F7A57BC15B5F8C2008C48A1 /* _BBXReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A57B915B5F8C2008C48A1 /* _BBXReachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -35,6 +34,12 @@
 		8F7A57D115B5F9A4008C48A1 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7A57CD15B5F9A4008C48A1 /* libssl.a */; };
 		8F7A581615B5FAFC008C48A1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7A581515B5FAFC008C48A1 /* SystemConfiguration.framework */; };
 		8F7A582615B5FC6C008C48A1 /* SKPaymentTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A582515B5FC6C008C48A1 /* SKPaymentTransaction.m */; };
+		EAA4D35E15B95FE200DA0298 /* NSURLConnection+SendAsync.h in Headers */ = {isa = PBXBuildFile; fileRef = EAA4D35C15B95FE200DA0298 /* NSURLConnection+SendAsync.h */; };
+		EAA4D35F15B95FE200DA0298 /* NSURLConnection+SendAsync.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA4D35D15B95FE200DA0298 /* NSURLConnection+SendAsync.m */; };
+		EAA4D36315BA39BB00DA0298 /* NSURLConnection+SendAsync.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA4D35D15B95FE200DA0298 /* NSURLConnection+SendAsync.m */; };
+		EAA4D36515BA39C000DA0298 /* _BBXJSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = EADE7A5715B9457900A1306A /* _BBXJSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		EADE7A5815B9457900A1306A /* _BBXJSONKit.h in Headers */ = {isa = PBXBuildFile; fileRef = EADE7A5615B9457900A1306A /* _BBXJSONKit.h */; };
+		EADE7A5915B9457900A1306A /* _BBXJSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = EADE7A5715B9457900A1306A /* _BBXJSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +79,10 @@
 		8F7A581515B5FAFC008C48A1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8F7A582415B5FC6C008C48A1 /* SKPaymentTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKPaymentTransaction.h; sourceTree = "<group>"; };
 		8F7A582515B5FC6C008C48A1 /* SKPaymentTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKPaymentTransaction.m; sourceTree = "<group>"; };
+		EAA4D35C15B95FE200DA0298 /* NSURLConnection+SendAsync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLConnection+SendAsync.h"; sourceTree = "<group>"; };
+		EAA4D35D15B95FE200DA0298 /* NSURLConnection+SendAsync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLConnection+SendAsync.m"; sourceTree = "<group>"; };
+		EADE7A5615B9457900A1306A /* _BBXJSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _BBXJSONKit.h; sourceTree = "<group>"; };
+		EADE7A5715B9457900A1306A /* _BBXJSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _BBXJSONKit.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +193,8 @@
 			isa = PBXGroup;
 			children = (
 				8F30EA8715B8888D00433825 /* Signed Request */,
+				EAA4D35615B95F4400DA0298 /* NSURLConnection+Async */,
+				EADE7A5515B9457900A1306A /* JSONKit */,
 				8F7A57B515B5F8AE008C48A1 /* Crypto */,
 				8F7A57BD15B5F8C5008C48A1 /* Reachability */,
 			);
@@ -255,6 +266,24 @@
 			name = Mocks;
 			sourceTree = "<group>";
 		};
+		EAA4D35615B95F4400DA0298 /* NSURLConnection+Async */ = {
+			isa = PBXGroup;
+			children = (
+				EAA4D35C15B95FE200DA0298 /* NSURLConnection+SendAsync.h */,
+				EAA4D35D15B95FE200DA0298 /* NSURLConnection+SendAsync.m */,
+			);
+			name = "NSURLConnection+Async";
+			sourceTree = "<group>";
+		};
+		EADE7A5515B9457900A1306A /* JSONKit */ = {
+			isa = PBXGroup;
+			children = (
+				EADE7A5615B9457900A1306A /* _BBXJSONKit.h */,
+				EADE7A5715B9457900A1306A /* _BBXJSONKit.m */,
+			);
+			path = JSONKit;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -268,6 +297,8 @@
 				8F7A57C415B5F8EC008C48A1 /* BBXBeeblex_Private.h in Headers */,
 				8F7A57C815B5F90A008C48A1 /* BBXIAPTransaction.h in Headers */,
 				8F30EA8B15B888A200433825 /* _BBXEncryptedTransaction.h in Headers */,
+				EADE7A5815B9457900A1306A /* _BBXJSONKit.h in Headers */,
+				EAA4D35E15B95FE200DA0298 /* NSURLConnection+SendAsync.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,7 +376,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F7A579F15B5F870008C48A1 /* InfoPlist.strings in Resources */,
-				8F7A57B715B5F8B9008C48A1 /* openssl in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,6 +433,8 @@
 				8F7A57C215B5F8EC008C48A1 /* BBXBeeblex.m in Sources */,
 				8F7A57C915B5F90A008C48A1 /* BBXIAPTransaction.m in Sources */,
 				8F30EA8C15B888A200433825 /* _BBXEncryptedTransaction.m in Sources */,
+				EADE7A5915B9457900A1306A /* _BBXJSONKit.m in Sources */,
+				EAA4D35F15B95FE200DA0298 /* NSURLConnection+SendAsync.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,6 +448,8 @@
 				8F7A57C315B5F8EC008C48A1 /* BBXBeeblex.m in Sources */,
 				8F7A57CA15B5F90A008C48A1 /* BBXIAPTransaction.m in Sources */,
 				8F7A582615B5FC6C008C48A1 /* SKPaymentTransaction.m in Sources */,
+				EAA4D36315BA39BB00DA0298 /* NSURLConnection+SendAsync.m in Sources */,
+				EAA4D36515BA39C000DA0298 /* _BBXJSONKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,11 +532,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Beeblex-SDK/Beeblex-SDK-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
+				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -519,11 +555,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Beeblex-SDK/Beeblex-SDK-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
+				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -543,6 +581,8 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
+				OTHER_LDFLAGS = "";
+				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -562,6 +602,8 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
+				OTHER_LDFLAGS = "";
+				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
 			};

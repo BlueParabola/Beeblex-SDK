@@ -13,6 +13,8 @@
 
 #import "_BBXCrypto.h"
 
+#import "JSONKit/_BBXJSONKit.h"
+
 
 @implementation _BBXEncryptedTransaction
 
@@ -23,7 +25,8 @@
     void(^errorBlock)(NSString *errorString) = ^(NSString *errorString) {
         NSError *error = [[NSError alloc] initWithDomain:errorDomain
                                                     code:BBXBeeblexErrorCodes.serverError
-                                                userInfo:@{ NSLocalizedDescriptionKey :  NSLocalizedString(@"The encryption engine cannot be initialized.", Nil)}];
+                                                userInfo:[NSDictionary dictionaryWithObject:NSLocalizedString(@"The encryption engine cannot be initialized.", Nil)
+                                                                                     forKey:NSLocalizedDescriptionKey]];
         completionBlock(Nil, error);
     };
         
@@ -63,21 +66,24 @@
         return;
     }
     
-    NSDictionary *finalPayload = @{
-    @"signature" : [_BBXCrypto encodeBase64:signature WithNewlines:NO],
-    @"payload" : [_BBXCrypto encodeBase64:cypherText WithNewlines:NO]
-    };
+    NSDictionary *finalPayload = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  [_BBXCrypto encodeBase64:signature WithNewlines:NO], @"signature",
+                                  [_BBXCrypto encodeBase64:cypherText WithNewlines:NO], @"payload",
+                                  Nil];
     
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:finalPayload
-                                                       options:0
-                                                         error:Nil];
+    NSData *jsonData = [finalPayload JSONDataWithOptions:JKSerializeOptionNone error:Nil];
     
     NSAssert(jsonData, @"Unable to create JSON payload");
-    
+
+#ifdef DEBUG
     if (!beeblex._useSSL) {
-        NSLog(@"Warning: Beeblex is not using HTTPS to connect to the server, most likely due to export compliance reasons. This is not necessarily a problem, but we thought you should know.");
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            NSLog(@"Warning: Beeblex is not using HTTPS to connect to the server, most likely due to export compliance reasons. This is not necessarily a problem, but we thought you should know.");
+        });
     }
-    
+#endif
+
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/app/%@/verify",
                                        beeblex._currentBaseURL,
                                        beeblex.apiKey]];
@@ -129,9 +135,8 @@
                                    return;
                                }
                                
-                               id result = [NSJSONSerialization JSONObjectWithData:resultData
-                                                                    options:0
-                                                                      error:&error];
+                               id result = [[BBXJSONDecoder decoder] objectWithData:resultData
+                                                                              error:&error];
                                
                                if (!result || (![result isKindOfClass:[NSDictionary class]] && ![result isKindOfClass:[NSArray class]])) {
                                    errorBlock(NSLocalizedString(@"Unable to decode the data returned by the Beeblex server.", Nil));

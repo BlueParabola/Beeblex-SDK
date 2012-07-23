@@ -14,7 +14,9 @@
 #import "_BBXEncryptedTransaction.h"
 #import "_BBXCrypto.h"
 #import "_BBXReachability.h"
+#import "_BBXJSONKit.h"
 
+#import "NSURLConnection+SendAsync.h"
 
 const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
     .domain = @"BBXIAPTransactionDomain"
@@ -46,6 +48,7 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
 }
 
 @synthesize useSandbox = _useSandbox;
+@synthesize hasConfigurationError = _hasConfigurationError;
 
 @synthesize useSecureConnection = _useSecureConnection;
 
@@ -99,17 +102,19 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
     
     NSAssert1(symmetricKey.length == 8, @"The secret key should be 8 bytes; %d found instead", symmetricKey.length);
     
-    NSDictionary *payload = @{
-        @"transactionData"  : [[NSString alloc] initWithData:_transaction.transactionReceipt
-                                                    encoding:NSUTF8StringEncoding],
-        @"submissionDate"   : @((NSUInteger) [[NSDate date] timeIntervalSince1970]),
-        @"transactionId"    : _transaction.transactionIdentifier,
-        @"useSandbox"       : @(self.useSandbox)
-    };
+    NSDictionary *payload = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [[NSString alloc] initWithData:_transaction.transactionReceipt
+                                                   encoding:NSUTF8StringEncoding], @"transactionData",
+                             
+                             [NSNumber numberWithUnsignedInt:(unsigned int) [[NSDate date] timeIntervalSince1970]], @"submissionDate",
+                             
+                             _transaction.transactionIdentifier, @"transactionId",
+                             
+                             [NSNumber numberWithBool:self.useSandbox], @"useSandbox",
+                             
+                             Nil];
     
-    NSData *jsonPayload = [NSJSONSerialization dataWithJSONObject:payload
-                                                          options:0
-                                                            error:Nil];
+    NSData *jsonPayload = [payload JSONDataWithOptions:JKSerializeOptionNone error:nil];
     
     [_BBXEncryptedTransaction
      processTransactionWithPayload:jsonPayload
@@ -128,8 +133,8 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
          if (!dictionary || ![dictionary isKindOfClass:[NSDictionary class]]) {
              error = [NSError errorWithDomain:BBXIAPTransactionErrorCodes.domain
                                          code:BBXBeeblexErrorCodes.serverError
-                                     userInfo:@{
-                   NSLocalizedDescriptionKey : NSLocalizedString(@"The validation data returned by the server was of the wrong type.", Nil)}];
+                                     userInfo:[NSDictionary dictionaryWithObject:NSLocalizedString(@"The validation data returned by the server was of the wrong type.", Nil)
+                                                                          forKey:NSLocalizedDescriptionKey]];
              
              self.hasServerError = YES;
              self.running = NO;
@@ -142,8 +147,8 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
          if ([[NSDate date] earlierDate:expirationDate] == expirationDate) {
              error = [NSError errorWithDomain:BBXIAPTransactionErrorCodes.domain
                                          code:BBXBeeblexErrorCodes.iapValidationError
-                                     userInfo:@{
-                   NSLocalizedDescriptionKey : NSLocalizedString(@"The validation data returned by the server has expired.", Nil)}];
+                                     userInfo:[NSDictionary dictionaryWithObject:NSLocalizedString(@"The validation data returned by the server has expired.", Nil)
+                                                                          forKey:NSLocalizedDescriptionKey]];
          
              self.running = NO;
              completionBlock(error);
@@ -160,7 +165,6 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
          completionBlock(Nil);
          
      }];
-
 }
 
 

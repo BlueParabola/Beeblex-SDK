@@ -12,12 +12,13 @@
 #import "BBXBeeblex_Private.h"
 #import "BBXIAPTransaction.h"
 
+#import "_BBXJSONKit.h"
 
 @implementation Beeblex_SDKTests
 
 - (void)setUp {
     [super setUp];
-    
+        
     [BBXBeeblex initializeWithAPIKey:@"Y2FiZDA2NDM3NGRhNmEzNzI5ZjkwMTNhM2E1YzI5ZWY0NjVmOTkyOTlhNWI1ZjM3YThiODViZjEyZWNlZTI2NzRmMWE4ZmI5ZWE3MmE0ZTE4MDQyY2Q3Y2IwZGY0MDQ5M2I4YWZlYjAzZWIzNGMzZWUwNjgxMDdkNGJiNmQ5Y2EsLS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlHZk1BMEdDU3FHU0liM0RRRUJBUVVBQTRHTkFEQ0JpUUtCZ1FEV1FscmtxdHhjRnNYRTlDc1Uya2h2ckx0aQp2N2pZWmVaSWJudG9UWmdTWXBSSFFNYS9DVE5odFNiM3VpNkNSM0JMd0pZaWJ2SHV4NWpISWpXNzkrMzJrUWpwCmphdTJoUDZXcFBDYTBodTVrbFF2UTJyakhZcEV0dDZHM1lJR3NDYU9oeC9lS25oOGlpMWdsa294bkorL0xtMVcKdlFWRkFpSll6RFBEZjB4OVR3SURBUUFCCi0tLS0tRU5EIFBVQkxJQyBLRVktLS0tLQ=="];
 }
 
@@ -46,7 +47,41 @@
     
     [transaction validateWithCompletionBlock:^(NSError *error) {
         NSLog(@"ERR: %@", error);
+        
+        STAssertNil(error, @"Validation completed with an error.");
     }];
+}
+
+- (void) testJSON {
+
+    NSDictionary *payload = [NSDictionary dictionaryWithObjectsAndKeys:
+                             @"fggijo254325uh3450h2p5h435983h459p2345235353458p9hefg", @"transactionData",
+                             [NSNumber numberWithUnsignedInteger:(NSUInteger) [[NSDate date] timeIntervalSince1970]], @"submissionDate",
+                             @"testID", @"transactionId",
+                             [NSNumber numberWithBool:YES], @"useSandbox",
+                             Nil];
+    
+    NSData *ns = [NSJSONSerialization dataWithJSONObject:payload
+                                                 options:0
+                                                   error:nil];
+    NSData *jk = [payload JSONDataWithOptions:JKSerializeOptionNone error:nil];
+    
+    STAssertEqualObjects(ns, jk, @"JSONKit and NSJSON produced different data.");
+
+    // Now see if we can recreate the original dictionary from the JSON data
+    
+    NSDictionary *nsdict = [NSJSONSerialization JSONObjectWithData:ns
+                                                           options:0
+                                                             error:nil];
+    STAssertEqualObjects(payload, nsdict, @"NSJSON produced a different object from the JSON data: %@", nsdict);
+    
+    NSDictionary *jkdict = [[BBXJSONDecoder decoder] objectWithData:jk];
+    
+    STAssertEqualObjects(payload, jkdict, @"JSONKit produced a different object from the JSON data: %@", jkdict);
+    
+    STAssertEqualObjects(nsdict, jkdict, @"NSJSON and JSONKit disagree on the objects produced from their data: %@ != %@", nsdict, jkdict);
+    
+    NSLog(@"NSJSON: %@\n\nJSONKit: %@", nsdict, jkdict);
 }
 
 @end
