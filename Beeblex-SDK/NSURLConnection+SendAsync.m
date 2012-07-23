@@ -3,7 +3,7 @@
 //  Beeblex-SDK
 //
 //  Created by Stéphane Peter on 7/20/12.
-//  Copyright (c) 2012 Blue Parabola, LLC. All rights reserved.
+//  Copyright (c) 2012 Stéphane Peter. All rights reserved. Used with permission.
 //
 
 #import "NSURLConnection+SendAsync.h"

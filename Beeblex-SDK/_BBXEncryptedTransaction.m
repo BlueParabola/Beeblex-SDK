@@ -122,11 +122,14 @@
                                    &length);
     
     if (error) {
+        free(encryptedData);
         errorBlock([NSString stringWithFormat:NSLocalizedString(@"Unable to sign transaction: OSStatus error %ld.", Nil), error]);
         return;
     }
 
     NSData *signature = [NSData dataWithBytes:encryptedData length:length];
+    
+    free(encryptedData);
     
     if (!signature) {
         errorBlock(NSLocalizedString(@"Cannot encrypt symmetric key.", Nil));

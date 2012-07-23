@@ -302,7 +302,7 @@ char *NewBase64Encode(
 //	receiver.
 //
 + (NSString *)base64EncodedStringFromData:(NSData *) data {
-	size_t outputLength;
+	size_t outputLength = 0;
 	char *outputBuffer =
     NewBase64Encode([data bytes], [data length], true, &outputLength);
 	

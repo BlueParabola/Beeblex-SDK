@@ -113,7 +113,7 @@ const struct BBXBeeblexErrorCodes BBXBeeblexErrorCodes = {
     [keyAttr setObject:refTag forKey:(__bridge id)kSecAttrApplicationTag];
     
     /* First we delete any current keys */
-    error = SecItemDelete((__bridge CFDictionaryRef) keyAttr);
+    SecItemDelete((__bridge CFDictionaryRef) keyAttr);
     
     [keyAttr setObject:extractedKey forKey:(__bridge id)kSecValueData];
     [keyAttr setObject:[NSNumber numberWithBool:YES] forKey:(__bridge id)kSecReturnPersistentRef];
