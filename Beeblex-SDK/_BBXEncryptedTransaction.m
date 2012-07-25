@@ -60,22 +60,21 @@
     unsigned char *outputData = malloc(data.length + 8);
     
     NSAssert(outputData, @"Memory allocation error.");
-    
-    if (CCCrypt(encrypt ? kCCEncrypt : kCCDecrypt,
-                kCCAlgorithmBlowfish,
-                ccPKCS7Padding,
-                &symmetricKey,
-                16,
-                &iv,
-                data.bytes,
-                data.length,
-                outputData,
-                data.length + 8,
-                &outputLength) != kCCSuccess) {
         
+    CCCryptorStatus status = CCCrypt(encrypt ? kCCEncrypt : kCCDecrypt,
+                                     kCCAlgorithmBlowfish,
+                                     ccPKCS7Padding,
+                                     &symmetricKey,
+                                     sizeof(symmetricKey),
+                                     &iv,
+                                     data.bytes,
+                                     data.length,
+                                     outputData,
+                                     data.length + 8,
+                                     &outputLength);
+    if (status != kCCSuccess) {
         free(outputData);
         return Nil;
-        
     }
     
     NSData *result = [NSData dataWithBytes:outputData length:outputLength];
@@ -108,11 +107,10 @@
         return;
     }
 
-    unsigned char *encryptedData = malloc(1024);
+    unsigned long length = 1024; // Ought to be more than enough
+    unsigned char *encryptedData = malloc(length);
     
     NSAssert(encryptedData, @"Memory allocation error.");
-
-    unsigned long length = 1024; // Ought to be more than enough
     
     OSStatus error = SecKeyEncrypt(beeblex.publicKey,
                                    kSecPaddingPKCS1,

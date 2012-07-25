@@ -109,7 +109,7 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
                              
                              Nil];
     
-    NSData *jsonPayload = [payload JSONDataWithOptions:JKSerializeOptionNone error:nil];
+    NSData *jsonPayload = [payload JSONData];
     
     [_BBXEncryptedTransaction
      processTransactionWithPayload:jsonPayload
@@ -174,6 +174,12 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
             @throw [NSException exceptionWithName:BBXBeeblexExceptionNames.configurationTransactionException
                                            reason:@"This transaction is not in a purchased or restored state"
                                          userInfo:Nil];
+        }
+        
+        if ([transaction.transactionReceipt length] == 0) {
+            @throw [NSException exceptionWithName:BBXBeeblexExceptionNames.configurationTransactionException
+                                           reason:@"This transaction does not include a proper receipt"
+                                         userInfo:Nil];            
         }
         
         _transaction = transaction;
