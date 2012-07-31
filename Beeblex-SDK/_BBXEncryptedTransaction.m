@@ -15,7 +15,8 @@
 #import "JSONKit/_BBXJSONKit.h"
 
 #import <CommonCrypto/CommonDigest.h>
-#import <CommonCrypto/CommonCryptor.h>
+
+#import "blowfish.h"
 
 
 @implementation _BBXEncryptedTransaction
@@ -45,6 +46,21 @@
 }
 
 
+static inline int32_t _bbxSwapInt32(int32_t data) {
+    return ((data & 0xFF000000) >> 24) |
+    ((data & 0x00FF0000) >>  8) |
+    ((data & 0x0000FF00) <<  8) |
+    ((data & 0x000000FF) << 24);
+}
+
+
+static inline void _bbxXor(unsigned char *dataPtr, unsigned char *xorPtr) {
+    for (NSInteger index = 0; index < sizeof(int64_t); index++) {
+        dataPtr[index] = dataPtr[index] ^ xorPtr[index];
+    }
+}
+
+
 + (NSData *) _processedDataFromData:(NSData *) data withSymmetricKey:(NSData *) signature encrypt:(BOOL) encrypt {
     unsigned char symmetricKey[16];
     unsigned char iv[16];
@@ -56,30 +72,123 @@
     
     CC_MD5(hash.bytes, hash.length, iv);
     
-    unsigned long outputLength = 0;
-    unsigned char *outputData = malloc(data.length + 8);
+    unsigned char padding;
+    
+    if (encrypt) {
+        padding = sizeof(int64_t) - (data.length % sizeof(int64_t));
+        
+        if (!padding) {
+            padding = sizeof(int64_t);
+        }
+    } else {
+        if (data.length % sizeof(int64_t) != 0) {
+            NSLog(@"Invalid input data size %d", data.length);
+            return Nil;
+        }
+        
+        padding = 0;
+    }
+    
+    unsigned long outputLength = data.length + padding;
+    unsigned char *outputData = malloc(outputLength);
     
     NSAssert(outputData, @"Memory allocation error.");
+
+    // Copy input into work buffer
+    
+    memcpy(outputData, data.bytes, data.length);
+
+    // Allocate blowfish structures
+    
+    BLOWFISH_CTX *ctx = malloc(sizeof(BLOWFISH_CTX));
+    
+    NSAssert(ctx, @"Memory allocation error.");
+    
+    // Apply PKCS7 padding if appropriate
+    
+    for (NSInteger index = data.length; index < outputLength; index++) {
+        outputData[index] = padding;
+    }
+    
+    // Encrypt or decrypt using CBC
+    
+    int64_t *pointer = (int64_t *) outputData;
+    int64_t *endPointer = ((int64_t *) outputData) + outputLength / sizeof(int64_t);
+    
+    int64_t xor = ((int64_t *) iv)[0];
+    int64_t encrypted;
+    
+    Blowfish_Init(ctx, symmetricKey, 16);
+    
+    while (pointer < endPointer) {
+        if (encrypt) {
+            _bbxXor((unsigned char *) pointer, (unsigned char *) &xor);
+        } else {
+            encrypted = *pointer;
+        }
         
-    CCCryptorStatus status = CCCrypt(encrypt ? kCCEncrypt : kCCDecrypt,
-                                     kCCAlgorithmBlowfish,
-                                     ccPKCS7Padding,
-                                     &symmetricKey,
-                                     sizeof(symmetricKey),
-                                     &iv,
-                                     data.bytes,
-                                     data.length,
-                                     outputData,
-                                     data.length + 8,
-                                     &outputLength);
-    if (status != kCCSuccess) {
-        free(outputData);
-        return Nil;
+        unsigned long *left = (unsigned long *) pointer;
+        unsigned long *right = ((unsigned long *) pointer + 1);
+        
+        *left = _bbxSwapInt32(*left);
+        *right = _bbxSwapInt32(*right);
+        
+        if (encrypt) {
+            Blowfish_Encrypt(ctx, left, right);
+        } else {
+            Blowfish_Decrypt(ctx, left, right);
+        }
+        
+        *left = _bbxSwapInt32(*left);
+        *right = _bbxSwapInt32(*right);
+        
+
+        if (!encrypt) {
+            _bbxXor((unsigned char *) pointer, (unsigned char *) &xor);
+            xor = encrypted;
+        } else {
+            xor = *pointer;
+        }
+                
+        pointer += 1;
+    }
+    
+    // Verify padding if decrypting
+    
+    if (!encrypt) {
+        padding = outputData[outputLength - 1];
+        
+        if (padding > (sizeof(int64_t) + 1) || padding < 1 || padding > outputLength - 1) {
+            free(outputData);
+            free(ctx);
+            
+            NSLog(@"Invalid padding found.");
+            
+            return Nil;
+        }
+        
+        unsigned char *ptr = outputData + outputLength - (padding % (sizeof(int64_t) + 1));
+        unsigned char index = 0;
+        
+        for (index = 0; index < (padding % (sizeof(int64_t) + 1)); index++) {
+            if (ptr[index] != padding) {
+                free(outputData);
+                free(ctx);
+                
+                NSLog(@"Invalid padding found.");
+                
+                return Nil;
+            }
+        }
+        
+        outputLength -= padding;
     }
     
     NSData *result = [NSData dataWithBytes:outputData length:outputLength];
-    
-    free(outputData);
+
+    free (outputData);
+    memset(ctx, sizeof(BLOWFISH_CTX), 0);
+    free(ctx);
     
     return result;
 }
@@ -190,7 +299,7 @@
                                NSData *resultData = [self _processedDataFromData:data withSymmetricKey:symmetricKey encrypt:NO];
                                
                                if (!resultData) {
-                                   errorBlock(NSLocalizedString(@"Unable to decrypt the data return by the Beeblex server.", Nil));
+                                   errorBlock(NSLocalizedString(@"Unable to decrypt the data returned by the Beeblex server.", Nil));
                                    return;
                                }
                                

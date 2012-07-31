@@ -29,6 +29,8 @@
 		8F7A582615B5FC6C008C48A1 /* SKPaymentTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7A582515B5FC6C008C48A1 /* SKPaymentTransaction.m */; };
 		8F92177715BDBFAC00803BDD /* _BBXBase64.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F92177515BDBFAC00803BDD /* _BBXBase64.h */; };
 		8F92177815BDBFAC00803BDD /* _BBXBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F92177615BDBFAC00803BDD /* _BBXBase64.m */; };
+		8FCF2A3115C7F95400B252BA /* blowfish.c in Sources */ = {isa = PBXBuildFile; fileRef = 8FCF2A2F15C7F95400B252BA /* blowfish.c */; };
+		8FCF2A3215C7F95400B252BA /* blowfish.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FCF2A3015C7F95400B252BA /* blowfish.h */; };
 		EAA4D35E15B95FE200DA0298 /* NSURLConnection+SendAsync.h in Headers */ = {isa = PBXBuildFile; fileRef = EAA4D35C15B95FE200DA0298 /* NSURLConnection+SendAsync.h */; };
 		EAA4D35F15B95FE200DA0298 /* NSURLConnection+SendAsync.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA4D35D15B95FE200DA0298 /* NSURLConnection+SendAsync.m */; };
 		EAA4D36315BA39BB00DA0298 /* NSURLConnection+SendAsync.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA4D35D15B95FE200DA0298 /* NSURLConnection+SendAsync.m */; };
@@ -71,6 +73,8 @@
 		8F7A582515B5FC6C008C48A1 /* SKPaymentTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKPaymentTransaction.m; sourceTree = "<group>"; };
 		8F92177515BDBFAC00803BDD /* _BBXBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _BBXBase64.h; sourceTree = "<group>"; };
 		8F92177615BDBFAC00803BDD /* _BBXBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _BBXBase64.m; sourceTree = "<group>"; };
+		8FCF2A2F15C7F95400B252BA /* blowfish.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = blowfish.c; sourceTree = "<group>"; };
+		8FCF2A3015C7F95400B252BA /* blowfish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blowfish.h; sourceTree = "<group>"; };
 		EAA4D35C15B95FE200DA0298 /* NSURLConnection+SendAsync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLConnection+SendAsync.h"; sourceTree = "<group>"; };
 		EAA4D35D15B95FE200DA0298 /* NSURLConnection+SendAsync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLConnection+SendAsync.m"; sourceTree = "<group>"; };
 		EADE7A5615B9457900A1306A /* _BBXJSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _BBXJSONKit.h; sourceTree = "<group>"; };
@@ -103,6 +107,8 @@
 		8F30EA8715B8888D00433825 /* Signed Request */ = {
 			isa = PBXGroup;
 			children = (
+				8FCF2A2F15C7F95400B252BA /* blowfish.c */,
+				8FCF2A3015C7F95400B252BA /* blowfish.h */,
 				8F30EA8915B888A200433825 /* _BBXEncryptedTransaction.h */,
 				8F30EA8A15B888A200433825 /* _BBXEncryptedTransaction.m */,
 			);
@@ -284,6 +290,7 @@
 				EADE7A5815B9457900A1306A /* _BBXJSONKit.h in Headers */,
 				EAA4D35E15B95FE200DA0298 /* NSURLConnection+SendAsync.h in Headers */,
 				8F92177715BDBFAC00803BDD /* _BBXBase64.h in Headers */,
+				8FCF2A3215C7F95400B252BA /* blowfish.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,6 +427,7 @@
 				EADE7A5915B9457900A1306A /* _BBXJSONKit.m in Sources */,
 				EAA4D35F15B95FE200DA0298 /* NSURLConnection+SendAsync.m in Sources */,
 				8F92177815BDBFAC00803BDD /* _BBXBase64.m in Sources */,
+				8FCF2A3115C7F95400B252BA /* blowfish.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

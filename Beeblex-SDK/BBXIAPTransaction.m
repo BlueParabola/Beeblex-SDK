@@ -94,6 +94,18 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
                                      userInfo:Nil];
     }
     
+    if ([_transaction.transactionReceipt length] == 0) {
+        NSError *error = [NSError errorWithDomain:BBXIAPTransactionErrorCodes.domain
+                                             code:BBXBeeblexErrorCodes.serverError
+                                         userInfo:[NSDictionary dictionaryWithObject:NSLocalizedString(@"The transaction does not contain a valid receipt.", Nil)
+                                                                              forKey:NSLocalizedDescriptionKey]];
+        
+        self.running = NO;
+        completionBlock(error);
+
+    }
+    
+    
     self.hasRun = YES;
     self.running = YES;
     
@@ -174,12 +186,6 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
             @throw [NSException exceptionWithName:BBXBeeblexExceptionNames.configurationTransactionException
                                            reason:@"This transaction is not in a purchased or restored state"
                                          userInfo:Nil];
-        }
-        
-        if ([transaction.transactionReceipt length] == 0) {
-            @throw [NSException exceptionWithName:BBXBeeblexExceptionNames.configurationTransactionException
-                                           reason:@"This transaction does not include a proper receipt"
-                                         userInfo:Nil];            
         }
         
         _transaction = transaction;

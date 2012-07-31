@@ -192,13 +192,13 @@ const struct BBXBeeblexErrorCodes BBXBeeblexErrorCodes = {
 
 
 + (NSString *) _baseURL {
-    //    return @"http://beeblex.local/api/v1";
+//    return @"http://beeblex.local/api/v1";
     return @"http://www.beeblex.com/api/v1";
 }
 
 
 + (NSString *) _baseSecureURL {
-    //    return @"http://beeblex.local/api/v1";
+//    return @"http://beeblex.local/api/v1";
     return @"https://www.beeblex.com/api/v1";
 }
 
