@@ -73,13 +73,20 @@ typedef void(^BBXAPITransactionCompletionBlock)(NSError *error);
 // obsolete response from the server. It's possible someone
 // is trying to perform a man-in-the-middle attack.
 
-@property (nonatomic, readonly) DEPRECATED_ATTRIBUTE BOOL validationExpired;
+@property (nonatomic, readonly) BOOL validationExpired;
+
+// If YES, there is a possible time mismatch between the server
+// and the client. If the device's time is off by more than ten
+// minutes from the current time, the server will refuse to
+// process requests to help protect against time-based attacks.
+
+@property (nonatomic, readonly) BOOL clientServerTimeMismatch;
 
 // If YES, the transaction has been successfully validated against
 // Apple servers.
 
 // Note that a value of NO here means an invalid receipt
-// only if hasConfigurationError, hasClientError, hasServerError, and
+// only if hasConfigurationError, hasServerError, and
 // validationExpired are also set to NO.
 
 @property (nonatomic, readonly) BOOL transactionVerified;

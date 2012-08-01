@@ -33,6 +33,7 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
 @property (nonatomic) BOOL hasClientError;
 
 @property (nonatomic) BOOL validationExpired;
+@property (nonatomic) BOOL clientServerTimeMismatch;
 @property (nonatomic) BOOL transactionVerified;
 @property (nonatomic) BOOL transactionIsDuplicate;
 
@@ -58,6 +59,7 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
 @synthesize hasClientError = _hasClientError;
 
 @synthesize validationExpired = _validationExpired;
+@synthesize clientServerTimeMismatch = _clientServerTimeMismatch;
 @synthesize transactionVerified = _transactionVerified;
 @synthesize transactionIsDuplicate = _transactionIsDuplicate;
 
@@ -131,6 +133,12 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
              self.hasServerError = YES;
              self.running = NO;
              
+             NSNumber *errorNumber = [error.userInfo objectForKey:_BBXEncryptedTransactionErrorCodeKey];
+             
+             if (errorNumber.integerValue == 410) {
+                 self.clientServerTimeMismatch = YES;
+             }
+             
              completionBlock(error);
              return;
          }
@@ -157,6 +165,8 @@ const struct BBXIAPTransactionErrorCodes BBXIAPTransactionErrorCodes = {
                                      userInfo:[NSDictionary dictionaryWithObject:NSLocalizedString(@"The validation data returned by the server has expired.", Nil)
                                                                           forKey:NSLocalizedDescriptionKey]];
          
+             self.hasServerError = YES;
+             self.validationExpired = YES;
              self.running = NO;
              completionBlock(error);
          }

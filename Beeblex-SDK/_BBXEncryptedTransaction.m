@@ -197,11 +197,14 @@ static inline void _bbxXor(unsigned char *dataPtr, unsigned char *xorPtr) {
 + (void) processTransactionWithPayload:(NSData *)payload errorDomain:(NSString *)errorDomain callback:(BBXEncryptedTransactionResultBlock)completionBlock {
     BBXBeeblex *beeblex = [BBXBeeblex _globalInstance];
     
-    void(^errorBlock)(NSString *errorString) = ^(NSString *errorString) {
+    void(^errorBlock)(NSString *errorString, NSInteger errorCode) = ^(NSString *errorString, NSInteger errorCode) {
         NSError *error = [[NSError alloc] initWithDomain:errorDomain
                                                     code:BBXBeeblexErrorCodes.serverError
-                                                userInfo:[NSDictionary dictionaryWithObject:errorString
-                                                                                     forKey:NSLocalizedDescriptionKey]];
+                                                userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                          errorString, NSLocalizedDescriptionKey,
+                                                          [NSNumber numberWithInteger:errorCode], _BBXEncryptedTransactionErrorCodeKey,
+                                                          nil]];
+        
         completionBlock(Nil, error);
     };
         
@@ -212,7 +215,7 @@ static inline void _bbxXor(unsigned char *dataPtr, unsigned char *xorPtr) {
     NSData *cypherText = [self _processedDataFromData:payload withSymmetricKey:symmetricKey encrypt:YES];
     
     if (!cypherText) {
-        errorBlock(NSLocalizedString(@"Cannot encrypt main payload using a symmetric algorithm.", Nil));
+        errorBlock(NSLocalizedString(@"Cannot encrypt main payload using a symmetric algorithm.", Nil), -1);
         return;
     }
 
@@ -230,7 +233,7 @@ static inline void _bbxXor(unsigned char *dataPtr, unsigned char *xorPtr) {
     
     if (error) {
         free(encryptedData);
-        errorBlock([NSString stringWithFormat:NSLocalizedString(@"Unable to sign transaction: OSStatus error %ld.", Nil), error]);
+        errorBlock([NSString stringWithFormat:NSLocalizedString(@"Unable to sign transaction: OSStatus error %ld.", Nil), error], -1);
         return;
     }
 
@@ -239,7 +242,7 @@ static inline void _bbxXor(unsigned char *dataPtr, unsigned char *xorPtr) {
     free(encryptedData);
     
     if (!signature) {
-        errorBlock(NSLocalizedString(@"Cannot encrypt symmetric key.", Nil));
+        errorBlock(NSLocalizedString(@"Cannot encrypt symmetric key.", Nil), -1);
         return;
     }
     
@@ -273,33 +276,35 @@ static inline void _bbxXor(unsigned char *dataPtr, unsigned char *xorPtr) {
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                if (!data || error) {
-                                   errorBlock(NSLocalizedString(@"Unable to contact the Beeblex validation server.", Nil));
+                                   errorBlock(NSLocalizedString(@"Unable to contact the Beeblex validation server.", Nil), -1);
                                    return;
                                }
                                
                                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
                                
                                if (httpResponse.statusCode > 399 && httpResponse.statusCode < 500) {
-                                   errorBlock([NSString stringWithFormat:NSLocalizedString(@"Server error %d.", Nil), httpResponse.statusCode]);
+                                   errorBlock([NSString stringWithFormat:NSLocalizedString(@"Server error %d.", Nil), httpResponse.statusCode],
+                                              httpResponse.statusCode);
                                    return;
                                }
                                
                                if (httpResponse.statusCode > 499 && httpResponse.statusCode < 600) {
-                                   errorBlock([NSString stringWithFormat:NSLocalizedString(@"Client error %d.", Nil), httpResponse.statusCode]);
+                                   errorBlock([NSString stringWithFormat:NSLocalizedString(@"Client error %d.", Nil), httpResponse.statusCode],
+                                              httpResponse.statusCode);
                                    return;
                                }
                                
                                data = [_BBXBase64 dataFromBase64String:[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]];
                                
                                if (!data.length) {
-                                   errorBlock(NSLocalizedString(@"Unable to decrypt the validation data.", Nil));
+                                   errorBlock(NSLocalizedString(@"Unable to decrypt the validation data.", Nil), -1);
                                    return;
                                }
                                
                                NSData *resultData = [self _processedDataFromData:data withSymmetricKey:symmetricKey encrypt:NO];
                                
                                if (!resultData) {
-                                   errorBlock(NSLocalizedString(@"Unable to decrypt the data returned by the Beeblex server.", Nil));
+                                   errorBlock(NSLocalizedString(@"Unable to decrypt the data returned by the Beeblex server.", Nil), -1);
                                    return;
                                }
                                
@@ -307,7 +312,7 @@ static inline void _bbxXor(unsigned char *dataPtr, unsigned char *xorPtr) {
                                                                               error:&error];
                                
                                if (!result || (![result isKindOfClass:[NSDictionary class]] && ![result isKindOfClass:[NSArray class]])) {
-                                   errorBlock(NSLocalizedString(@"Unable to decode the data returned by the Beeblex server.", Nil));
+                                   errorBlock(NSLocalizedString(@"Unable to decode the data returned by the Beeblex server.", Nil), -1);
                                    return;
                                }
                                

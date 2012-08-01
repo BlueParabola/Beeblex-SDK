@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 
 
+#define _BBXEncryptedTransactionErrorCodeKey @"_BBXEncryptedTransactionErrorCodeKey"
+
+
 typedef void(^BBXEncryptedTransactionResultBlock)(id response, NSError *error);
 
 
